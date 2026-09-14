@@ -1,12 +1,13 @@
-# 时间线体检。用 scripts/run_step.py 执行，沙箱内运行，不要 import。
+# Timeline inspection. Run via scripts/run_step.py, inside the sandbox, no imports.
 #   python3 scripts/run_step.py scripts/steps/00_inspect_timeline.py
-# 时间线交给用户之前跑一遍，确认没有真空隙、没有超尾、轨道内容符合预期。
+# Run this before handing a timeline over: check for true gaps, overruns and
+# unexpected track contents.
 
 result = {"tracks": [], "problems": [], "notes": []}
 
 tl = project.GetCurrentTimeline()
 if tl is None:
-    result["error"] = "当前没有时间线"
+    result["error"] = "no current timeline"
 else:
     fps = float(tl.GetSetting("timelineFrameRate") or 24)
     start, end = tl.GetStartFrame(), tl.GetEndFrame()
@@ -25,7 +26,7 @@ else:
             items = tl.GetItemListInTrack(kind, i) or []
             if not items:
                 if kind == "video":
-                    result["notes"].append(f"{kind} 轨 {i} 是空的，如非必要可删")
+                    result["notes"].append(f"{kind} track {i} is empty; delete it unless it is needed")
                 continue
 
             clips, transitions, spans = [], [], []
@@ -40,7 +41,7 @@ else:
                     clips.append(entry)
                 spans.append((s, e))
 
-            # 区间合并，只有真正没被任何片段覆盖的地方才算空隙
+            # Merge intervals: only regions covered by no clip at all count as gaps
             spans.sort()
             holes = []
             reach = spans[0][1]
@@ -54,15 +55,15 @@ else:
                    "transitions": transitions, "clips_detail": clips}
             if holes:
                 row["gaps"] = holes
-                # 主画面轨（video 1）必须连续，其余轨道有空隙是正常的
+                # The main picture track (video 1) must be continuous; other tracks may be sparse
                 if kind == "video" and i == 1:
-                    result["problems"].append(f"主画面轨有空隙 {holes}")
+                    result["problems"].append(f"gap on the main picture track {holes}")
                 else:
                     result["notes"].append(
-                        f"{kind} 轨 {i} 有 {len(holes)} 处空隙（覆盖轨与音效轨允许）"
+                        f"{kind} track {i} has {len(holes)} gap(s); allowed on overlay and audio tracks"
                     )
             if reach > end:
-                result["problems"].append(f"{kind} 轨 {i} 超出末尾 {reach - end} 帧")
+                result["problems"].append(f"{kind} track {i} overruns the end by {reach - end} frames")
             result["tracks"].append(row)
 
     result["summary"] = {

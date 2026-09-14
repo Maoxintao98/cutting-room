@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="ECHOLAB" width="380">
+</p>
+
 # Cutting Room
 
 [中文](README.zh-CN.md) | **English**
@@ -105,6 +109,7 @@ Built from 24 books on editing theory, 19 papers on generated-video quality asse
 cutting-room/
 ├── SKILL.md                     # Skill entry point and workflow
 ├── agents/openai.yaml           # Agent metadata
+├── assets/logo.png              # Brand mark
 ├── install.sh                   # Install script
 ├── references/
 │   ├── craft.md                 # Cutting grammar: film types, four questions per cut, rhythm model, transitions

@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""把步骤脚本送进 Resolve 执行，并支持拼接共享代码。
+"""Send a step script into Resolve, concatenating shared code as needed.
 
-Resolve 的沙箱没有文件系统，步骤脚本不能 import 本地模块，所以共享代码
-必须在执行前拼进脚本文本。这个脚本负责拼接和投递。
+The Resolve sandbox has no filesystem, so a step script cannot import local
+modules. Shared code has to be concatenated into the script text first.
+This script does the concatenation and the dispatch.
 
-用法
-    python3 run_step.py steps/10_picture.py                # 沙箱执行
-    python3 run_step.py steps/10_picture.py --unsafe       # 放开文件系统
+Usage
+    python3 run_step.py steps/10_picture.py                # sandboxed
+    python3 run_step.py steps/10_picture.py --unsafe       # with filesystem
     python3 run_step.py steps/30_titles.py --pre lib/titles.py lib/common.py
-    python3 run_step.py steps/10_picture.py --timeout 240
+    python3 run_step.py steps/10_picture.py --timeout 60
 
-环境变量 RMCP 可以指定客户端路径，默认用同目录的 resolve_mcp.py。
+The RMCP environment variable overrides the client path; by default it uses
+resolve_mcp.py from the same directory.
 """
 
 from __future__ import annotations
@@ -26,20 +28,20 @@ HERE = pathlib.Path(__file__).resolve().parent
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="在 Resolve 里执行一个步骤脚本")
-    ap.add_argument("step", help="步骤脚本路径")
-    ap.add_argument("--pre", nargs="*", default=[], help="先拼进来的共享代码文件")
-    ap.add_argument("--unsafe", action="store_true", help="用 run_script_unsafe，放开文件系统")
-    ap.add_argument("--timeout", type=int, default=60, help="脚本内部超时秒数，上限 60")
+    ap = argparse.ArgumentParser(description="Execute a step script inside Resolve")
+    ap.add_argument("step", help="path to the step script")
+    ap.add_argument("--pre", nargs="*", default=[], help="shared code files to concatenate first")
+    ap.add_argument("--unsafe", action="store_true", help="use run_script_unsafe, allowing filesystem access")
+    ap.add_argument("--timeout", type=int, default=60, help="script timeout in seconds, 60 max")
     args = ap.parse_args()
 
     step = pathlib.Path(args.step)
     if not step.exists():
-        print(f"找不到步骤脚本：{step}", file=sys.stderr)
+        print(f"Step script not found: {step}", file=sys.stderr)
         return 2
 
     src = step.read_text()
-    # 步骤脚本里允许写 import 共享模块，实际由拼接替代
+    # A step may write an import of a shared module; concatenation replaces it
     pre = "".join(pathlib.Path(p).read_text() + "\n" for p in args.pre)
     body = pre + src
 

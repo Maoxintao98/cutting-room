@@ -1,207 +1,207 @@
 ---
 name: cutting-room
-description: 剪辑、执行、审片与 AIGC 选片。四种用法。剪，指盘点素材、定切点与节奏。执行，指在 DaVinci Resolve 里建时间线、剪辑、导出工程与渲染。评，指对一条成片给出客观、有证据、不掺人情的评审，含六维评分、问题清单和能用/需修/重做的结论。选，指判断 AIGC 生成片段能不能用（KEEP/NG）并排序。Use when cutting or diagnosing an edit, driving DaVinci Resolve to assemble a timeline and render, reviewing a finished cut and needing an honest evidence-based critique, judging whether AI-generated footage is usable, scoring or ranking generated shots, or doing shot-by-shot analysis.
+description: 剪辑、审片与 AIGC 选片（film editing, review, and AIGC clip QC）。四种用法，定方案、执行剪辑、审片、选片。Plan a cut by settling the film type, the single goal, and where to cut. Cut by building and editing the timeline in DaVinci Resolve. Review a finished cut with an honest, evidence-based critique, six-dimension scoring, and a ship/fix/rebuild verdict. Select by judging whether AIGC-generated clips are usable (KEEP/fix/NG) and ranking them. Use when cutting or diagnosing an edit, driving DaVinci Resolve to assemble a timeline, reviewing a finished cut and needing an honest critique, judging whether AI-generated footage is usable, scoring or ranking generated shots, or doing shot-by-shot analysis.
 ---
 
-# 剪辑、审片与选片
+# Cutting, Reviewing, and Selecting
 
-从"手里有什么"一直做到"交出什么"。四条线共用一套判断。
+From "what do I have" through to "what do I hand over". Four modes share one set of judgements.
 
-| 用法 | 什么时候用 | 细则 |
+| Mode | When | Detail |
 |---|---|---|
-| **剪** | 定片种、定目标、决定在哪切 | [references/craft.md](references/craft.md) |
-| **执行** | 真的把片子剪出来 | [references/resolve.md](references/resolve.md) |
-| **评** | 拿到一条成片，要一条准确、有证据、不掺人情的判断 | [references/review.md](references/review.md) |
-| **选** | 判断单个 AIGC 片段能不能用、怎么排序 | [references/clip-qc.md](references/clip-qc.md) |
+| **Plan** (定方案) | Settle the film type, the goal, and where to cut | [references/craft.md](references/craft.md) |
+| **Cut** (执行剪辑) | Actually build the timeline | [references/resolve.md](references/resolve.md) |
+| **Review** (审片) | Given a finished cut, produce a precise, evidence-based judgement | [references/review.md](references/review.md) |
+| **Select** (选片) | Judge a single AIGC clip and rank a batch | [references/clip-qc.md](references/clip-qc.md) |
 
-配套脚本有两个。`scripts/probe.py` 盘点素材，`scripts/resolve_mcp.py` 直连 Resolve。
+Scripts: `scripts/probe.py` inventories media, `scripts/resolve_mcp.py` talks to Resolve directly.
 
 ---
 
-## 一、开工前：先确定剪的是什么片子
+## 1. Before you start: settle what kind of film this is
 
-**不要一上来就剪。**先问清楚，再动手。不同片种要的技法可能完全相反。
+**Do not start cutting.** Ask first. Different film types often want opposite techniques.
 
-### 六个问题（缺哪个问哪个）
-1. **片种与用途**：品牌氛围片／产品片／叙事短片／纪录片·访谈／口播·知识／卡点·MV／动作·运动？
-2. **时长与画幅**：15s 还是 30s+？横屏还是竖屏（竖屏要留安全区）？
-3. **要什么效果**：情绪感染／讲清信息／卖货／讲故事。**只能有一个主目标。**
-4. **素材状况**：实拍还是生成？可用率多少？有没有已知瑕疵？
-5. **调性与参考**：有参考片吗？品牌调性是克制还是张扬？
-6. **声音条件**：有 BGM／配音／音效吗？
+### Six questions (ask whichever are missing)
+1. **Type and purpose**: brand mood piece / product film / narrative short / documentary·interview / talking head·explainer / beat-driven·music video / action·sport?
+2. **Length and aspect**: 15s or 30s+? Landscape or vertical (vertical needs safe margins)?
+3. **Desired effect**: emotional impact / clarity of information / selling / storytelling. **Only one primary goal.**
+4. **Footage**: shot or generated? What proportion is usable? Any known defects?
+5. **Tone and reference**: is there a reference film? Is the brand restrained or loud?
+6. **Sound**: is there music, voice-over, or effects?
 
-**沟通纪律**：一次只问最关键的两三个，别甩清单。用户说"你看着办"，就按最保险的默认走，**信息清晰加情绪优先**。
+**Communication discipline**: ask only the two or three most critical questions at a time, never dump the whole list. If the user says "use your judgement", take the safest default: **clarity first, emotion second**.
 
-### 片种与技法侧重
+### Film type against technique priority
 
-| 片种 | 优先技法 | 要警惕 |
+| Type | Prioritise | Beware |
 |---|---|---|
-| 品牌氛围片 | 蒙太奇、物理节奏、色彩统一、卡点与留白 | 别强求叙事弧；别用花哨转场 |
-| 产品片 | 信息清晰度、插入镜头、动作音、焦点引导 | 炫技盖过产品 |
-| 叙事短片 | 连贯性、反应镜头、视线匹配、**情绪剪接点** | 跳切破坏沉浸 |
-| 纪录片·访谈 | 声音桥、J/L cut、插入镜头盖跳剪 | 别用重音卡点 |
-| 口播·知识 | J cut、跳切、字幕、**节奏剪接点** | 无变化的长镜会掉人 |
-| 卡点·MV | 节奏剪接点、动势匹配剪、速度操控 | 全片卡点会变 MTV |
-| 动作·运动 | 动接动、两极镜头、速度操控 | 越轴让人迷失方位 |
-| 写实·长镜头 | **无技巧剪辑**、纵深调度、声音连续 | 光学技巧会打断真实感 |
+| Brand mood piece | Montage, physical rhythm, colour consistency, cutting on the beat with room to breathe | Do not force a narrative arc; avoid showy transitions |
+| Product film | Information clarity, inserts, action sounds, eye-trace | Technique that outshines the product |
+| Narrative short | Continuity, reaction shots, eyeline match, **emotional cut points (情绪剪接点)** | Jump cuts break immersion |
+| Documentary·interview | Sound bridges, J/L cuts, inserts to cover jump cuts | Do not cut on heavy beats |
+| Talking head·explainer | J cuts, jump cuts, captions, **rhythmic cut points (节奏剪接点)** | Long static shots lose the viewer |
+| Beat-driven·music video | Rhythmic cut points, motion match cuts, speed ramps | Cutting on every beat turns it into MTV |
+| Action·sport | Motion-to-motion cutting (动接动), extreme scale contrast (两极镜头), speed ramps | Crossing the axis disorients the viewer |
+| Realist·long take | **Straight-cut editing (无技巧剪辑)**, staging in depth, continuous sound | Optical effects break the realism |
 
-### 两条风格路线
+### Two stylistic routes
 
-- **蒙太奇（构造）**。意义在镜头之间产生，剪辑是主动的制造者。适合表达、宣传、情绪爆发、时间压缩。
-- **写实（记录）**。尊重时空连续，剪辑只负责不打断。适合生活质感、表演、压迫与等待。
+- **Montage (constructive).** Meaning is produced *between* shots, and the edit is an active author. Suits expression, persuasion, emotional peaks, compressed time.
+- **Realism (observational).** Respect the continuity of time and space; the edit only has to avoid interrupting. Suits texture of life, performance, pressure and waiting.
 
-选哪条取决于你要**说服**还是**呈现**。两条都能出好片，但技法互相打架，别在一支片子里两头下注。
+Which one you take depends on whether you are **persuading** or **presenting**. Both produce good films, but the techniques fight each other. Do not bet on both in one piece.
 
-## 二、第一步：盘点素材
+## 2. Step one: inventory the footage
 
-**动手之前先知道手里有哪些牌。**跑一遍盘点，把"有哪些素材"从模糊印象变成一张可比较的表。
+**Know your hand before you play it.** Run an inventory and turn "what footage is there" from an impression into a comparable table.
 
 ```bash
-python3 scripts/probe.py <素材目录>
-python3 scripts/probe.py <素材目录> --contact 6   # 附带每 6 秒抽帧的拼图命令
+python3 scripts/probe.py <media-directory>
+python3 scripts/probe.py <media-directory> --contact 6   # also prints contact-sheet commands
 ```
 
-输出包含每个片段的时长、分辨率、帧率、横竖画幅、编码、音轨数、大小，并标出异常（无音轨、非标帧率、需要留安全区）。
+The output lists duration, resolution, frame rate, orientation, codec, audio tracks and size for every clip, and flags anomalies (no audio, off-spec frame rate, vertical that needs safe margins).
 
-**看内容用抽帧。**盘点只回答"是什么规格"，不回答"里面是什么"。要判断内容、动势和起幅落幅，用脚本给出的 ffmpeg 命令生成 contact sheet 再看。
+**To see content, extract frames.** The inventory answers "what are the specs", not "what is in it". To judge content, motion and head/tail frames, generate a contact sheet with the ffmpeg command the script prints.
 
-盘点之后要做的事：**分清生成瑕疵和剪辑问题**。同一处别扭可能来自两个地方，药方相反。
+Then do one classification: **separate generation defects from editing problems.** The same awkwardness can come from either, and the cure is opposite.
 
-- **生成瑕疵**。模型把画面画坏了（手指、文字、物理）。回炉重生成，或修补、遮挡、切掉。
-- **剪辑问题**。素材本身没毛病，是切点、顺序、声音、节奏错了。改切点就能救，不必重生成。
+- **Generation defect.** The model drew the frame wrong (hands, text, physics). Regenerate, patch, mask it, or cut it out.
+- **Editing problem.** The footage is fine; the cut point, the order, the sound or the rhythm is wrong. Fixing the cut saves it, no regeneration needed.
 
-美学质量与剪辑技法执行只有**弱相关**。画面漂亮的片子照样可以在剪辑上是错的。诊断时分别归类。
+Aesthetic quality and editing-technique execution are only **weakly correlated**. A beautiful-looking film can still be cut wrong. Classify before you diagnose.
 
-## 三、第二步：定方案（切点与节奏）
+## 3. Step two: settle the plan (cut points and rhythm)
 
-### 六法则：切点冲突时的仲裁顺序
+### The six rules: arbitration order when cut points conflict
 
-理想切点要同时满足六件事。**冲突时从上往下保，从下往上牺牲。**
+An ideal cut point satisfies six things at once. **When they conflict, hold from the top down and sacrifice from the bottom up.**
 
-| 优先级 | 法则 | 权重 | 追问 |
+| Priority | Rule | Weight | Question |
 |---|---|---|---|
-| 1 | 情感 | 51% | 是否忠实于此刻该有的情绪？ |
-| 2 | 故事 | 23% | 是否推进了叙事？ |
-| 3 | 节奏 | 10% | 是否落在对的节拍上？ |
-| 4 | 视线追踪 | 7% | 观众的注意力是否被平顺接续？ |
-| 5 | 二维画面平面 | 5% | 是否守住 180°轴线、银幕方向？ |
-| 6 | 三维空间 | 4% | 是否维持实际空间关系？ |
+| 1 | Emotion | 51% | Is it true to the emotion of the moment? |
+| 2 | Story | 23% | Does it advance the narrative? |
+| 3 | Rhythm | 10% | Does it land on the right beat? |
+| 4 | Eye-trace | 7% | Is the audience's attention carried smoothly? |
+| 5 | Two-dimensional plane of screen | 5% | Does it hold the 180° axis and screen direction? |
+| 6 | Three-dimensional space of action | 4% | Does it preserve the actual spatial relationship? |
 
-**机制（最容易漏的一条）**。满足高位法则会**掩盖**低位问题，反之不成立。情感和故事对了，观众不会在意你越轴；轴线正确但视线追踪没处理，这一刀就是失败的。
+**The mechanism most people miss.** Satisfying a higher rule **masks** problems with lower ones, and not the other way round. Get emotion and story right and nobody minds that you crossed the axis. Get the axis right but ignore eye-trace, and the cut fails.
 
-**推论**。为准确的情绪牺牲空间连续性，是专业判断而不是失误，这也是跳切合法性的来源。把六法则倒着用（一切为了不越轴、画面顺）是业余剪辑的典型症状，技术全对，情绪是空的。
+**The corollary.** Sacrificing spatial continuity for accurate emotion is a professional judgement, not a mistake. It is also where jump cuts get their legitimacy. Running the six rules backwards (everything for the sake of not crossing the axis, keeping the image smooth) is the signature failure of amateur editing: technically correct, emotionally empty.
 
-**辅助直觉**。眨眼理论。人在思考转折时会眨眼，好的切点约等于观众心里眨眼的位置。反复通看，每次都在同一处走神，那里就是该切或不该切的地方。
+**A supporting intuition.** The blink theory. People blink at the moment their thought turns, so a good cut point sits roughly where the audience would blink. Watch the film repeatedly; wherever you drift off at the same spot every time is where the cut should or should not be.
 
-### 每切一刀前的四问
+### Four questions before every cut
 
-1. **切什么**。这一刀之后观众看到什么**新信息**？没有新信息的镜头就是废镜头。
-2. **为什么切**。叙事推进、情绪转折，还是节奏需要？说不出理由的就是为剪而剪。
-3. **何时切**。精确到帧。动作剪接点切在**动作中段**（不是做完之后）；情绪剪接点可延长也可提前切断；节奏剪接点按节拍排。
-4. **怎么切**。硬切为默认（九成以上）；叠化、划像、跳切、匹配剪各有调性代价。转场必须符合调性，奢侈品广告用滑移转场会被判为廉价。
+1. **What is being cut to.** What **new information** does the audience get after this cut? A shot with no new information is a dead shot.
+2. **Why cut.** Does the narrative advance, does the emotion turn, does the rhythm need it? A cut with no reason is cutting for its own sake.
+3. **When to cut.** Precise to the frame. An action cut goes at the **middle of the movement**, not after it finishes. An emotional cut can be held long or cut off early. A rhythmic cut lands on the beat.
+4. **How to cut.** Hard cut is the default, nine times out of ten. Dissolves, wipes, jump cuts and match cuts each carry a tonal cost. The transition must fit the register: a wipe in a luxury ad reads as cheap.
 
-**动接动与静接静**。运动接运动要留起幅落幅，用前镜动势带后镜；固定接固定，前镜的静止是后镜的衔接依据。混接必须有过渡支点，靠入画出画、遮挡、同向运动或声音先行。
+**Motion-to-motion and static-to-static (动接动·静接静).** Motion cutting to motion needs the head and tail of the camera move preserved, so the outgoing movement carries the incoming shot. Static cutting to static: the stillness of the outgoing shot is what the incoming shot leans on. A mixed join needs a bridging point, supplied by an entrance or exit, an occlusion, movement in the same direction, or sound arriving first.
 
-术语表、剪接点体系、节奏三层模型、声音清单、蒙太奇与转场全表、机位轴线、拉片表 → [references/craft.md](references/craft.md)
+Glossary, the cut-point system, the three-layer rhythm model, the sound checklist, montage and transitions, camera axis, and the shot-by-shot sheet are all in [references/craft.md](references/craft.md).
 
-## 四、第三步：在 Resolve 里落地
+## 4. Step three: land it in Resolve
 
-方案要变成时间线。走 DaVinci Resolve 21.1 自带的官方 MCP。
+The plan becomes a timeline. This runs through the official MCP shipped with DaVinci Resolve 21.1.
 
-**这一站的交付物是一条编辑好的时间线，渲染不归你管。**
+**The deliverable at this stage is an edited timeline. Rendering is not your job.**
 
 ```bash
-python3 scripts/resolve_mcp.py status                     # Resolve 在跑吗
-python3 scripts/run_step.py steps/10_picture.py           # 跑一个步骤脚本
-python3 scripts/run_step.py steps/30_titles.py --unsafe   # 需要文件系统时
+python3 scripts/resolve_mcp.py status                     # is Resolve running
+python3 scripts/run_step.py steps/10_picture.py           # run one step script
+python3 scripts/run_step.py steps/30_titles.py --unsafe   # when filesystem access is needed
 ```
 
-**三条铁律**
+**Three hard rules**
 
-1. **先查再写**。动手前用 `search_scripting_api` 确认签名，不要凭记忆写 API。
-2. **不覆盖用户的工程**。开工前另存为新项目或新时间线。
-3. **大改动先报方案**。删片段、改结构、批量操作、起渲染之前，先讲清楚再动手。
+1. **Look it up before you write it.** Confirm the signature with `search_scripting_api` before calling it. Never write an API from memory.
+2. **Never overwrite the user's project.** Save as a new project or a new timeline before starting.
+3. **Report before large changes.** Explain what you are about to do before deleting clips, restructuring, running bulk operations, or starting a render.
 
-流程是盘点素材、建工程、导入、建时间线、剪辑、做覆盖层、处理声音、体检。
+The flow is: inventory, create the project, import, build the timeline, cut, add overlays, handle sound, inspect.
 
-**交接前跑一次时间线体检**，它会算出每轨的片段数、转场数和真空隙。主画面轨必须连续，覆写轨和音效轨允许有空隙。
+**Run the timeline inspection before handing over.** It reports clip and transition counts per track and any true gaps. The main picture track must be continuous; overlay, title and audio tracks are allowed to be sparse.
 
 ```bash
 python3 scripts/run_step.py scripts/steps/00_inspect_timeline.py
 ```
 
-API 清单、脚本骨架、与 ffmpeg 的分工 → [references/resolve.md](references/resolve.md)
+API list, script skeleton, and the division of labour with ffmpeg are in [references/resolve.md](references/resolve.md).
 
-## 五、第四步：自检与审片
+## 5. Step four: self-check and review
 
-成片之后，或者用户丢来一条成品要评审时，用这一节。
+Use this after finishing a cut, or when the user hands you a finished film to review.
 
-### 六维评分卡
+### The six-dimension scorecard
 
-每维 0 到 3 分（0 无问题／1 轻微／2 明显／3 致命）。
+Score each from 0 to 3 (0 no problem / 1 minor / 2 clear / 3 fatal).
 
-| # | 维度 | 追问 |
+| # | Dimension | Questions |
 |---|---|---|
-| 1 | 叙事推进 | 镜头属于同一个故事吗？**顺序能不能颠倒**？开场有建立或钩子吗？收尾突兀吗？ |
-| 2 | 视听协同与声音设计 | 卡点、动作音对应、声音桥、音乐有无能量走向、沉默有没有动机？ |
-| 3 | 视觉构成与图文 | 构图（主体被切或太靠边）、焦点引导、字幕（压脸？对比度？）、色彩统一 |
-| 4 | 镜头间连续性 | 动势是否延续、环境（光位与色温）是否相容、转场是否合调性 |
-| 5 | 信息与品牌一致性 | 看完知道在卖什么吗？还是"一组互不相关的素材"？ |
-| 6 | 时间节奏与速度 | 镜头数与长度匹配目标能量吗？变速有动机、方向对吗？ |
+| 1 | Narrative progression | Do the shots belong to one story? **Can the order be reversed?** Is there an establishing shot or a hook at the start? Is the ending abrupt? |
+| 2 | Sound and image working together | Cut on the beat, action sounds matching, sound bridges, does the music have an energy arc, is the silence motivated? |
+| 3 | Composition and graphics | Framing (subject cropped or too near the edge), eye-trace, captions (across a face? enough contrast?), colour consistency |
+| 4 | Shot-to-shot continuity | Does motion carry across, are the environments compatible (light direction, colour temperature), does the transition fit the register |
+| 5 | Message and brand coherence | After watching, do you know what is being sold? Or is it "a set of unrelated footage"? |
+| 6 | Rhythm and pacing | Do shot count and length match the target energy? Are speed changes motivated and pointed the right way? |
 
-**高频三错**（先查这三条）。镜头间运动不连续／信息不清晰／**顺序可颠倒**（倒过来播一样顺，说明排列没有叙事逻辑）。
+**The three most common failures** (check these first): motion that does not carry between shots / unclear information / **an order that can be reversed** (if it plays the same backwards, the sequence has no narrative logic).
 
-### 客观性纪律
+### The discipline of objectivity
 
-审片的底线是说真话且说得准。
+The floor for reviewing is saying the true thing accurately.
 
-1. **不奉承，不软化**。禁用语是「整体不错，但是……」「瑕不掩瑜」「提点小建议」。不因人情、关系、作者是谁而软化结论；该重做就说重做。**得罪人是这份工作的成本，不是失误。**
-2. **不凑数**。不为显得专业而编造问题，没问题就说没问题。反过来也一样，不为格式对称而硬找优点。强行平衡本身就是不诚实。
-3. **每条判断都要有证据**。指得出时间码或镜头号的才写。震撼、高级、有质感、节奏不错这类词不加分，它们只是噪音。
-4. **分清事实、共识和偏好**。个人偏好必须标明【偏好】，不能当结论。把偏好当成标准是审片最常见的失职。
-5. **优点和缺点用同一把尺**。优点必须和缺点一样具体，还要指出全片最好的那一个镜头并说明它好在哪。片子好就明确说好，不要用"但是"给它打折。
-6. **评价作品，不评价人**。不评人不等于放水，对作品的判断该多严厉就多严厉。
-7. **说"不行"要附上"为什么"和"怎么改"**。只否定不给路，等于没评。
-8. **不确定就说不确定**。缺 Brief、缺平台、缺硬性要求，直接讲，不要编一个听起来很专业的结论。
+1. **No flattery, no softening.** Banned: "overall it's solid, but…", "the flaws don't outweigh the merits", "just a small suggestion". The verdict does not change because of who made the film. If it needs rebuilding, say so. **Offending someone is the cost of this work, not a mistake.**
+2. **No padding.** Do not invent a problem to look thorough; if nothing is wrong, say nothing is wrong. The reverse holds too: do not manufacture strengths for symmetry. Forced balance is its own kind of dishonesty.
+3. **Every judgement carries evidence.** Only write what you can point at with a timecode or shot number. Words like stunning, premium, textured and well-paced score nothing. They are noise.
+4. **Separate fact, consensus and preference.** A personal preference must be marked [preference] and cannot serve as a criterion. Passing preference off as a standard is the most common failure in review work.
+5. **One standard for strengths and weaknesses.** A strength must be as specific as a criticism, and must name the single best shot in the film and say why it works. When a film is good, say so plainly, without a "but" that weakens it.
+6. **Judge the work, not the person.** Not judging the person does not mean going easy. Be as severe with the work as it deserves.
+7. **A criticism arrives with a why and a fix.** Rejecting without a path is not a review.
+8. **Say when you do not know.** Missing brief, missing platform, missing hard requirement? Say so. Do not invent a confident-sounding verdict.
 
-流程是三遍看法。第一遍不带笔，只记自己在第几秒走神或被抓住；第二遍带笔拉片；第三遍关掉声音看画面，再只听声音，因为声音问题最容易被画面盖住。
+The process is three passes. First pass with no pen, noting only the seconds where you drifted or were caught. Second pass with a pen, breaking the film down shot by shot. Third pass with the sound off, then with only the sound, because sound problems are the easiest to mask by picture.
 
-报告模板、子项定义、结论判定 → [references/review.md](references/review.md)
+Report template, sub-item definitions and verdict criteria are in [references/review.md](references/review.md).
 
-## 六、选片：判断单个生成片段
+## 6. Selecting: judging a single generated clip
 
-对**单个 AIGC 片段**打两个互相独立的标签。
+Tag every **single AIGC clip** on two independent axes.
 
-- **A 层·生成真实性**。有没有瑕疵？按三级分（表层／结构／时序-语义）。
-- **B 层·剪辑可用性**。假设瑕疵修好，它作为素材好不好用？看**动势**，也就是动势是死的、有方向的，还是有明确起幅落幅。动势决定它能承担什么角色。
+- **Layer A · generation realism.** Are there defects? Grade them in three tiers (surface / structural / temporal-semantic).
+- **Layer B · editing usability.** Assuming the defects were fixed, is it a good piece of material? Look at **motion**: dead, directional, or with a clear head and tail. Motion decides what role the clip can take.
 
-两个标签互相独立。可以 A 差 B 好（画崩了但动势漂亮，值得重生成），也可以 A 好 B 废（完美但动势死，接不上）。
+The two axes are independent. A clip can fail A and pass B (broken image, beautiful motion, worth regenerating), or pass A and fail B (flawless but motionless, unusable next to anything).
 
-**三级瑕疵的处置**
+**Handling the three defect tiers**
 
-- 一级（表层，偏色、闪烁、纹理、镜头运动异常）。焦点区内重生成，区外调色、降噪、缩短镜头。
-- 二级（结构，变形、多物体融合、解剖违例、遮挡失效）。焦点区内重生成，区外裁切或遮挡。
-- 三级（时序-语义，**不可逆性违例**、因果违例、动作无后果、文字不可读、跨镜头一致性）。最致命，多数必须重生成。观众说不清，但会觉得假。
+- Tier 1 (surface: colour shift, flicker, texture, abnormal camera motion). Inside the focal area, regenerate. Outside it, grade, denoise or shorten the shot.
+- Tier 2 (structural: deformation, merged objects, anatomical violations, failed occlusion). Inside the focal area, regenerate. Outside it, crop or mask.
+- Tier 3 (temporal-semantic: **irreversibility violations**, broken causality, action without consequence, unreadable text, broken cross-shot consistency). The most damaging; most of these must be regenerated. The viewer cannot name what is wrong but will feel it as fake.
 
-**标记纪律**。文件名直接写状态，`编号_内容_状态_备注`。NG 素材不要删，同 prompt 的失败样本是下一轮改提示词的证据。
+**Naming discipline.** Put the status in the filename, `number_content_status_note`. Do not delete NG material; the failures for a given prompt are the evidence for the next prompt revision.
 
-30 类细粒度标签、选片记录表、闭环工作法 → [references/clip-qc.md](references/clip-qc.md)
+The 30 fine-grained labels, the per-clip record sheet and the closed-loop workflow are in [references/clip-qc.md](references/clip-qc.md).
 
-## 七、补救手段
+## 7. Remedies
 
-改动从便宜到贵，按这个顺序试。
+Try these in order, cheapest first.
 
-1. 改切点或缩短镜头，切掉瑕疵那几帧
-2. 遮挡，前叠物件、字幕、转场
-3. 裁切重构图，避开焦点区外的瑕疵
-4. 调色统一，救环境连续性与色温突变
-5. 声音覆盖
-6. 变速，把 2 秒拉成 4 秒，让模型少生成变形
-7. 重生成，**只改一个 prompt 变量**，逐一比对
+1. Move the cut point or shorten the shot, cutting out the defective frames
+2. Mask it: a foreground element, a caption, a transition
+3. Crop and reframe to exclude defects outside the focal area
+4. Grade for consistency, to rescue environmental continuity and colour temperature jumps
+5. Cover it with sound
+6. Change speed, stretching two seconds into four so the model has less to animate
+7. Regenerate, changing **one prompt variable at a time**, and compare
 
-## 八、纪律
+## 8. Discipline
 
-- **剪掉你最爱的那一个镜头**。只服务你自己而不服务这支片子的，删。
-- **允许可接受的不连贯**。技术不完美不等于失误。
-- **声音与画面同权**。声音线单独剪，再与画面合并检验。
-- 剪完逐条过 [references/craft.md](references/craft.md) 末尾的自查清单。
+- **Cut your favourite shot.** If it serves you and not the film, delete it.
+- **Accept some discontinuity.** Technical imperfection is not the same as a mistake.
+- **Sound is equal to picture.** Cut the sound separately, then check it against the picture.
+- When the cut is done, walk the checklist at the end of [references/craft.md](references/craft.md).

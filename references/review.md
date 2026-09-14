@@ -1,225 +1,222 @@
-# 评审一条片子 · 细则
+# Reviewing a Film · Detail
 
-审片是独立于"动手剪"的一种模式。目标只有一个：**给出一条准确、有证据、不掺人情的判断。**
+Reviewing is a mode of its own, separate from cutting. It has one goal: **to produce a precise, evidence-based judgement with no personal favour in it.**
 
 ---
 
-## 一、客观性纪律（审片的底线）
+## 1. The discipline of objectivity (the floor for reviewing)
 
-### 1. 不奉承，不软化
-- 禁用语：「整体不错，但是……」「瑕不掩瑜」「提点小建议」「已经很好了」。
-- 有问题直说，用词直接。**不因人情、关系、作者是谁而软化结论。**
-- 该重做就说该重做。得罪人是这份工作的成本，不是失误。
+### 1. No flattery, no softening
+- Banned: "overall it's solid, but…", "the flaws don't outweigh the merits", "just a small suggestion", "it's already very good".
+- Say the problem plainly and in direct words. **The verdict does not change because of a personal relationship or who made the film.**
+- If it needs rebuilding, say it needs rebuilding. Offending someone is the cost of this work, not a mistake.
 
-### 2. 不凑数
-- **不为显得专业而编造问题。**没问题就说没问题。
-- 反过来同样：**不为格式对称而硬找优点。**优点少就少写。
-- 强行平衡（好话一半坏话一半）本身就是不诚实。
+### 2. No padding
+- **Never invent a problem to look thorough.** If nothing is wrong, say nothing is wrong.
+- The reverse holds too: **never manufacture strengths to make the format symmetrical.** If there are few strengths, write few.
+- Forced balance, half praise and half criticism, is itself dishonest.
 
-### 3. 每条判断都要有证据
-- 能指到**时间码／镜头号**的才写，指不出来就别写。
-- 证据写法：「第 8 秒，全景硬切特写，中间没有过渡支点 → 观众方位感断掉」。
-- 禁止无证据的形容词：震撼、高级、有质感、节奏不错，这些不加分，只是噪音。
+### 3. Every judgement carries evidence
+- Only write what you can point at with a **timecode or shot number**. If you cannot point at it, leave it out.
+- How that reads: "At 00:08, a hard cut from wide to close-up with no bridging beat, so the viewer loses their bearings."
+- Adjective with no evidence behind it: stunning, premium, textured, well-paced. These score nothing. They are noise.
 
-### 4. 区分三种判断，并标明
-| 类型 | 例子 | 处理 |
+### 4. Separate three kinds of judgement, and label them
+| Kind | Example | How to handle |
 |---|---|---|
-| **客观事实** | 「第 3 秒越轴了」「音乐在 12 秒断掉」 | 直接下判断 |
-| **专业共识** | 「情绪高潮处镜头剪短了」 | 下判断，并说明依据 |
-| **个人偏好** | 「我不喜欢这个冷调」 | **必须标注【偏好】**，不能当结论 |
+| **Objective fact** | "The axis is crossed at 00:03", "the music cuts out at 00:12" | State it as a judgement |
+| **Professional consensus** | "The shot is cut short at the emotional peak" | State it, and give the basis |
+| **Personal preference** | "I don't like the cold grade" | **Must be labelled [preference]** and cannot serve as a conclusion |
 
-把偏好伪装成标准，是审片最常见的失职。
+Dressing a preference up as a standard is the most common failure in review work.
 
-### 5. 优点和缺点用同一把尺
-- 不许「优点写得很虚（有想法、有诚意）、缺点写得很实」。
-- **优点必须和缺点一样具体**：指出全片**最好的那一个镜头**，并说明为什么好。
-- 好就说好：片子确实好，明确说好、说清好在哪，**不要用"但是"给它打折**。
+### 5. One standard for strengths and weaknesses
+- Not allowed: a vague strength ("it has ideas, it has sincerity") beside a precise weakness.
+- **A strength must be as specific as a criticism**: name the **single best shot in the film** and say why it works.
+- Praise plainly. When the film is genuinely good, say so clearly and say where it is good. **Do not dock it with a "but".**
 
-### 6. 评价作品，不评价人
-- 不说「你不懂剪辑」，只说「这一刀在这里不成立」。
-- 但**不评价人 ≠ 放水**：对作品的判断该多严厉就多严厉。
+### 6. Judge the work, not the person
+- Not "you don't understand editing", but "this cut does not hold at this point".
+- But **not judging the person is not the same as going easy**: be as severe with the work as the work deserves.
 
-### 7. 说"不行"必须附上"为什么"和"怎么改"
-- 只否定不给路，等于没评。
-- 若确实想不到更好的处理，明说：「我看出问题，但没有把握给出更好的方案。」
+### 7. "This doesn't work" arrives with a why and a fix
+- Rejecting without offering a path is not a review.
+- If you genuinely cannot think of a better handling, say so: "I can see the problem but I am not confident I have a better solution."
 
-### 8. 不确定就说不确定
-- 需要额外信息才能判断的（Brief、目标平台、客户硬性要求、素材客观限制），**直接说缺什么**，别硬评。
-- 信息不足时宁可少下结论，也不要编一个"听起来很专业"的结论。
+### 8. Say when you do not know
+- When a judgement needs information you do not have (the brief, the target platform, a hard client requirement, a real limitation of the footage), **say what is missing**. Do not review on an assumption.
+- With thin information, prefer fewer conclusions over inventing one that sounds professional.
 
-### 失职自查
-- [ ] 有没有「整体不错」式的开场白？
-- [ ] 有没有为凑数而写的问题或优点？
-- [ ] 每条判断都指得出时间码吗？
-- [ ] 有没有把个人偏好当成标准？
-- [ ] 优点和缺点的具体程度对等吗？
-- [ ] 有没有因为知道作者是谁而调整措辞？
-- [ ] 说「不行」的地方都给了改法吗？
-
----
-
-## 二、流程：三遍看法
-
-1. **第一遍，不带笔。**只看**自己的反应**。第几秒被抓住？第几秒走神、想看手机、想快进？只记时间码，**不看技术**，只看效果。
-2. **第二遍，带笔拉片。**逐镜填拉片表（见 [craft.md](craft.md)），记切点类型、时长、景别、声音处理；再把第一遍的走神点逐一对照技法找原因。
-3. **第三遍，拆开看。**关掉声音看一遍画面；再只听声音不看画面。**声音问题在正常播放里最容易被画面盖住。**
+### Self-check for dereliction
+- [ ] Is there an "overall it's solid" style opening?
+- [ ] Is there a problem or a strength written just to fill the format?
+- [ ] Can every judgement be pointed at with a timecode?
+- [ ] Has a personal preference been used as a standard?
+- [ ] Are the strengths as specific as the weaknesses?
+- [ ] Was the wording adjusted because you know who made it?
+- [ ] Does every "this doesn't work" come with a fix?
 
 ---
 
-## 三、六维评分卡（成片序列用）
+## 2. Process: three passes
 
-对**整支片/整段序列**打分。每维 0 到 3 分。附子项追问与典型反例。
+1. **First pass, no pen.** Watch only **your own reaction**. At which second were you caught? At which second did you drift, reach for your phone, want to skip ahead? Note only the timecodes. **Do not think about technique**, only about effect.
+2. **Second pass, with a pen.** Fill in the shot-by-shot sheet (see [craft.md](craft.md)): cut-point type, length, scale, sound handling. Then take each point where you drifted in pass one and trace it back to a technique.
+3. **Third pass, taken apart.** Watch the picture with the sound off, then listen to the sound without the picture. **Sound problems are the easiest to mask by picture during normal playback.**
 
-### 1. 叙事推进 Narrative Progression
-- **叙事连贯**：这些镜头属于同一个故事吗？
-  - 反例：运动饮料广告里出现"撒镁粉"的镜头，既和跑步无关也和拳击无关 → 观众困惑"为什么有人在空中拍粉"。
-  - 正例：口红旋出来 → 光泽的唇部特写，虽色号对不上，但关联成立。
-- **叙事顺序**：顺序可否颠倒？
-  - 反例：先"钥匙转动"再"女人走向车"；先"端上饮料"再"制作饮料"。→ 颠倒后一样通顺，说明排反了。
-- **开场**：有没有建立镜头（交代环境）或钩子（抓注意力）？
-- **收尾**：是自然收束还是突兀？（"第 12 秒音乐突然断掉"＝像失误而非设计）
-  - 修法示例：logo 不切黑屏，而是**淡入天空画面**里。
+---
 
-### 2. 视听协同与声音设计 Audiovisual Coordination & Sound Design
-> 这是**最能拉开差距**的一维：画面挑不出错，声音一垮，整支片子就塌了。
-- **卡点**：cut to beat 是否有效？（极特写人脸 → 切到全景人群，正踩重低音 drop＝"从孤独的挣扎转向集体的力量"）
-- **动作音对应**：音效是否与动作匹配？（开瓶声、"鞋底砸地"的摩擦声、风的自然嗡鸣）
-- **声音桥**：J cut / L cut 用了吗？（篮球投篮那一下"唰"的一声，用 L cut 延到下一个镜头；缺了它，投篮镜头"感觉不完整"）
-- **音乐推进**：音乐有没有能量走向？（反例：14 秒全程同一电平，缺一个 crescendo 或 drop 来标记高潮）
-- **沉默**：有意使用还是故障感？（正例：戴上降噪耳机→声音消失→暖光变冷蓝，"让人更专注"；反例：开场呼吸镜头没音效→观众以为没开声音）
+## 3. The six-dimension scorecard (for a finished film or sequence)
 
-### 3. 视觉构成与图文 Visual Composition & Graphics
-- **构图**：主体是否被切、是否太靠边？主元素要留在竖屏安全区内，贴边的话在新机型上会被裁掉。
-- **焦点引导（eye trace）**：构图是否把视线引向该看的东西？
-  - 反例 1：产品放在画面底部，而观众习惯看中心 → 产品应更靠中。
-  - 反例 2：连续两个眼部特写，**瞳孔位置不一致** → 观众视线被甩。
-- **字幕设计**：是否压住脸？对比度是否够？
-  - 反例：白色字幕压在金色黄铜扣上 → 看不见。字幕压在脸上 → 该下移。
-- **色彩一致性**：色板是否统一？
-- **场景变化**：是否有足够的视觉变化但又不散？
+Score the **whole film or the whole sequence**. Each dimension 0 to 3, with the sub-questions and typical counter-examples below.
 
-### 4. 镜头间连续性 Shot-to-Shot Continuity
-- **运动连续**：动作/运镜是否平顺传递？
-  - 反例：第一镜推进穿过白菊，第二镜模特的脸完全静止 → 推进应该**延续到脸上**。
-  - 正例：篮球向下拍 → 切足球向上挑（g-down 接 g-up 的**动势匹配剪**，且音效从"弹跳"变"踢球"，抓人）。
-  - 反例：三个眼部特写机位只微移 → **"卡顿感"（stuttering）**，cut 得"不舒服"。
-- **环境连续**：光位/色调/场景是否相容？
-  - 反例：暖调室内健身房 → 亮绿足球场 → 冷酷夜景天际线 → "像一堆互不相关的素材拼在一起，而不是一支完整的广告"。
-- **转场设备是否合调性**：
-  - 反例：奢侈品广告用滑移（wipe）转场 → "像中学生用 iMovie 剪的"；不该用的叠化也会显廉价。
+### 1. Narrative progression
+- **Narrative coherence**: do these shots belong to one story?
+  - Counter-example: a sports drink ad containing a shot of chalking hands, unrelated to the running and unrelated to the boxing, so the viewer wonders "why is someone clapping chalk into the air".
+  - Positive: a lipstick twisting up, then a close-up of glossed lips. The shades do not match, but the association holds.
+- **Narrative order**: can the order be reversed?
+  - Counter-example: a key turning, then a woman walking to the car; drinks being served, then drinks being made. If it plays the same reversed, it is in the wrong order.
+- **Opening**: is there an establishing shot, or a hook that catches attention?
+- **Closing**: does it resolve, or is it abrupt? "The music stops dead at 00:12" reads as a mistake rather than a choice.
+  - A fix, for instance: the logo does not cut to black but **fades into the sky footage**.
 
-### 5. 信息与品牌一致性 Message & Brand Coherence
-- **信息清晰度**：看完知道在卖什么吗？
-  - 反例：瑜伽 → 城市短跑 → 跳绳，三组镜头很好但**不知道在卖什么**。
-  - 反例：液体腮红 + 眉胶 + 修容刷三种产品轮流出现 → 直到结尾都不知道这是哪一支的广告。
-- **品牌一致性**：画面/声音/调性是否吻合品牌？
-- **产品可见度**：产品是否看得清、有没有被淹没在蒙太奇里？
+### 2. Sound and image working together
+> This is the dimension that separates films most sharply. The picture can be beyond reproach and the sound still brings the whole thing down.
+- **Cut to beat**: is it effective? An extreme close-up of a face cutting to a wide of the crowd, landing exactly on a bass drop, shifts the film from solitary struggle to collective force.
+- **Action sounds matching**: do effects match the action? A bottle opening, the scuff of a shoe hitting pavement, the natural hum of wind.
+- **Sound bridges**: are J cuts and L cuts used? The swish of a basketball shot carried by an L cut into the next shot; without it, the shot of the player feels incomplete.
+- **Musical progression**: does the music have an energy arc? Counter-example: fourteen seconds at one flat level with no crescendo or drop to mark the peak.
+- **Silence**: deliberate, or does it read as a fault? Positive: noise-cancelling headphones go on, sound disappears, warm light turns cool blue, focusing the viewer. Counter-example: an opening breath shot with no effect, so the audience checks whether their sound is on.
 
-### 6. 时间节奏与速度 Temporal Rhythm & Pacing
-- **节奏**：镜头数与长度是否匹配目标能量？
-  - 正例：瑜伽广告镜头少 → "松弛"；高强度训练用快速连切 → "模拟高强度训练"。
-  - 反例：助眠广告用快速跳切 → "你想让它放松，跳切让它太紧张了"。
-- **速度操控**：变速有无动机、方向对不对？
-  - 反例：第一镜"鸡肉落上铁板"用了快→慢变速，但若改成**慢→快**，加速落下的动作就能**无缝接到下一镜"刀落下去切香菜"的向下运动**上（用速度变化去对接动势）。
+### 3. Composition and graphics
+- **Framing**: is the subject cropped or too near the edge? Key elements belong inside the vertical safe margins; pushed to the edge they get cropped on newer handsets.
+- **Eye-trace**: does the composition lead the eye where it should go?
+  - Counter-example 1: the product sits at the bottom of frame while viewers look at the centre, so it should move toward the centre.
+  - Counter-example 2: two consecutive close-ups of an eye with the **pupil in a different position**, so the viewer's gaze is thrown.
+- **Caption design**: does it sit across a face? Is the contrast sufficient?
+  - Counter-example: white type over a gold brass clasp, so it cannot be read. Type across a face should drop lower.
+- **Colour consistency**: is the palette unified?
+- **Scene variation**: is there enough visual variety without the film coming apart?
 
-### 评分汇总表模板
+### 4. Shot-to-shot continuity
+- **Motion continuity**: does action and camera movement carry smoothly?
+  - Counter-example: the first shot pushes in through a white flower, the second is a completely static shot of a model's face. The push should **continue onto the face**.
+  - Positive: a basketball bouncing down cutting to a football flicked up, a downward-to-upward **movement match cut**, with the sound changing from bounce to kick. It grabs attention.
+  - Counter-example: three close-ups of an eye with the camera barely moved, producing a **stutter**, and the cuts feel uncomfortable.
+- **Environmental continuity**: are light direction, palette and setting compatible?
+  - Counter-example: a warm indoor gym, then a bright green football pitch, then a cold night skyline. It reads as a pile of unrelated stock footage rather than one film.
+- **Does the transition fit the register?**
+  - Counter-example: a wipe in a luxury ad reads as something cut by a teenager in iMovie. A dissolve in the wrong place reads cheap too.
+
+### 5. Message and brand coherence
+- **Clarity of message**: after watching, do you know what is being sold?
+  - Counter-example: yoga, then city sprinting, then skipping. Three good sets of shots and no idea what is being sold.
+  - Counter-example: liquid blush, brow gel and a bronzer brush in rotation, so that even at the end you do not know which product this ad is for.
+- **Brand consistency**: do picture, sound and register fit the brand?
+- **Product visibility**: can the product be seen clearly, or is it drowned in the montage?
+
+### 6. Rhythm and pacing
+- **Pacing**: do shot count and length match the target energy?
+  - Positive: few shots in a yoga ad reads as relaxed; rapid cutting in a high-intensity training ad mimics the training.
+  - Counter-example: rapid jump cuts in a sleep aid, when you want it to feel relaxing and the jump cuts make it tense.
+- **Speed manipulation**: is the change motivated and pointed the right way?
+  - Counter-example: the first shot of chicken landing on a griddle uses a fast-to-slow ramp. Change it to **slow-to-fast** and the accelerating fall joins **seamlessly onto the downward chop of the knife in the next shot**, using the speed change to connect the motion.
+
+### Summary table
+
 ```
-片名/版本：            总时长：      镜头数：      平均镜长：
+Title/version:            Total length:      Shot count:      Average shot:
 --------------------------------------------------------------
-1 叙事推进        [0/1/2/3]  主要问题：
-2 视听协同与声音  [0/1/2/3]  主要问题：
-3 视觉构成与图文  [0/1/2/3]  主要问题：
-4 镜头间连续性    [0/1/2/3]  主要问题：
-5 信息与品牌      [0/1/2/3]  主要问题：
-6 时间节奏与速度  [0/1/2/3]  主要问题：
+1 Narrative progression   [0/1/2/3]  Main problem:
+2 Sound and image         [0/1/2/3]  Main problem:
+3 Composition/graphics    [0/1/2/3]  Main problem:
+4 Shot-to-shot continuity [0/1/2/3]  Main problem:
+5 Message and brand       [0/1/2/3]  Main problem:
+6 Rhythm and pacing       [0/1/2/3]  Main problem:
 --------------------------------------------------------------
-生成瑕疵（另计）：  一级：            二级：            三级：
-最省力的三处修改：
-①
-②
-③
+Generation defects (counted separately):  Tier1:   Tier2:   Tier3:
+Three cheapest changes:
+1.
+2.
+3.
 ```
 
 ---
 
----
+## 4. Evaluation dimension dictionary
 
-## 四、评测维度词典
+Decoupled into four families. **Diagnose by filing the problem under a dimension before discussing a fix.**
 
-按四大类解耦。**诊断时先把问题归到某一维，再谈修法**。
+**Temporal quality**
+1. subject_consistency — is the subject still the same object across frames
+2. background_consistency
+3. temporal_flickering — frame-to-frame jitter in brightness, texture or detail
+4. motion_smoothness
+5. dynamic_degree — is there enough movement (too low reads as a slideshow)
+6. overall_consistency
 
-**时序质量**
-1. 主体一致性 subject_consistency，同一主体跨帧是否还是同一个东西
-2. 背景一致性 background_consistency
-3. 时序闪烁 temporal_flickering，亮度/纹理/细节的逐帧抖动
-4. 运动平滑度 motion_smoothness
-5. 动态程度 dynamic_degree，动得够不够（太低＝幻灯片）
-6. 整体一致性 overall_consistency
+**Frame quality**
+7. aesthetic_quality
+8. imaging_quality — noise, blur, compression artefacts
 
-**帧质量**
-7. 美学质量 aesthetic_quality
-8. 成像质量 imaging_quality，噪点、模糊、压缩痕迹
+**Video-text alignment (semantic)**
+9. object_class
+10. multiple_objects
+11. human_action
+12. color
+13. spatial_relationship
+14. scene
 
-**视频-文本对齐（语义）**
-9. 物体类别 object_class
-10. 多物体 multiple_objects
-11. 人物动作 human_action
-12. 颜色 color
-13. 空间关系 spatial_relationship
-14. 场景 scene
+**Style**
+15. temporal_style
+16. appearance_style
 
-**风格**
-15. 时序风格 temporal_style
-16. 外观风格 appearance_style
+**A further set, on intrinsic faithfulness** (closer to "does it look fake"):
+frame-wise quality, temporal consistency, adherence to simple prompts, compositional creativity, **commonsense reasoning**, **physical realism**, **human anatomy**, adherence to complex prompts.
 
-**另一组"内在真实性"维度**（更接近"假不假"）：
-逐帧质量、时序一致、简单提示遵从、组合创造力、**常识推理**、**物理真实性**、**人体解剖**、复杂提示遵从。
-
-**用法**：评测报告写"时序闪烁（temporal_flickering）明显"比写"画质不行"可执行得多，前者指向降噪/重生成，后者什么也没说。
+**How to use it**: a report saying "temporal flickering is pronounced" is far more actionable than "the image quality is bad". The first points at denoising or regeneration; the second says nothing.
 
 ---
 
----
-
-## 五、审片报告模板
+## 5. Review report template
 
 ```
-片名/版本：              片种：              时长：          画幅：
-【信息缺口】缺 ______，可能影响对 ______ 的判断
+Title/version:        Type:        Length:        Aspect:
+[MISSING] ______, which affects the judgement on ______
 ────────────────────────────────────────────────
-一、先说成立的                        ← 必填，且必须具体
-  1. 全片最好的镜头：第 __ 秒，______，好在 ______
-  2. ______（有证据的具体优点）
+1. What holds                        <- required, and must be specific
+  1. Best shot in the film: at __s, ______, and it works because ______
+  2. ______ (a specific strength with evidence)
   3. ______
-  （找不到三条就写两条；一条都没有就写"这一项我没有发现可取之处"）
+  (If you cannot find three, write two. If you find none, write
+   "I found nothing of value in this dimension".)
 
-二、六维评分
-  维度                 分数    证据（时间码）
-  1 叙事推进            _/3     第 __ 秒：______
-  2 视听协同与声音设计  _/3     第 __ 秒：______
-  3 视觉构成与图文      _/3     第 __ 秒：______
-  4 镜头间连续性        _/3     第 __ 秒：______
-  5 信息与品牌一致性    _/3     第 __ 秒：______
-  6 时间节奏与速度      _/3     第 __ 秒：______
-  注：【偏好】项不计入失分
+2. Six dimensions
+  Dimension                 Score   Evidence (timecode)
+  1 Narrative progression   _/3     at __s: ______
+  2 Sound and image         _/3     at __s: ______
+  3 Composition/graphics    _/3     at __s: ______
+  4 Shot-to-shot continuity _/3     at __s: ______
+  5 Message and brand       _/3     at __s: ______
+  6 Rhythm and pacing       _/3     at __s: ______
+  Note: items marked [preference] do not count against the score
 
-三、问题清单（按"改动成本 / 收益比"排序，不按严重程度）
-  1.【高收益·低成本】第 __ 秒：______  → 改法：______
-  2.【高收益·高成本】第 __ 秒：______  → 改法：______
-  3.【低收益】______
+3. Issues (ordered by benefit against cost, not by severity)
+  1. [High benefit, low cost]  at __s: ______  -> fix: ______
+  2. [High benefit, high cost] at __s: ______  -> fix: ______
+  3. [Low benefit] ______
 
-四、结论
-  ☐ 能用    ☐ 需修（改：______）    ☐ 重做（因为：______）
-  一句话总评（不要修饰，不要客套）：
+4. Verdict
+  [ ] ship   [ ] fix (change: ______)   [ ] rebuild (because: ______)
+  One-line summary, no decoration and no pleasantries:
 ```
 
-**排序逻辑**：问题清单**不按严重程度排，按"改动成本 / 收益比"排**，一个 10 秒钟能改好的大问题，价值远高于一个要重拍的小问题。
+**Why that order.** The issue list is ordered **by benefit against cost, not by severity**. A large problem that takes ten seconds to fix is worth far more than a small one that needs a reshoot.
 
-**结论的判定标准**
+**Criteria for the verdict**
 
-| 结论 | 判据 |
+| Verdict | Test |
 |---|---|
-| **能用** | 六维无 2 分以上项；按原样交付不会伤害目的 |
-| **需修** | 有 2 分项，但**不重拍、不重生成就能解决** |
-| **重做** | 有 3 分项，且问题出在**根上**（叙事顺序、信息不清、素材不可用） |
-
+| **Ship** | No dimension scores 2 or above; delivering as-is does not harm the purpose |
+| **Fix** | There is a 2, but it can be solved **without a reshoot or a regeneration** |
+| **Rebuild** | There is a 3, and the problem is **at the root**: narrative order, unclear message, unusable footage |

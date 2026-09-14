@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""盘点素材目录：用 ffprobe 列出每个片段的时长、分辨率、帧率、画幅和音轨。
+"""Inventory a media directory: list duration, resolution, frame rate, orientation and audio for every clip.
 
-用法
-    python3 probe.py <目录或文件...>            # 输出 Markdown 表格
-    python3 probe.py <目录> --contact 6         # 附带每 N 秒抽帧的拼图命令
-    python3 probe.py <目录> --json              # 输出 JSON
+Usage
+    python3 probe.py <dir-or-files...>          # print a Markdown table
+    python3 probe.py <dir> --contact 6          # also print contact-sheet commands
+    python3 probe.py <dir> --json               # print JSON
 
-设计意图：剪辑的第一步是知道手里有哪些牌。这个脚本把"有哪些素材"从
-模糊印象变成一张可比较的表，之后再谈选片和排序。
+Why this exists: the first step of editing is knowing what you hold. This turns
+"what footage is there" from an impression into a comparable table.
 """
 
 from __future__ import annotations
@@ -58,19 +58,19 @@ def summarise(path: Path) -> dict:
     if ratio is None:
         orientation = "?"
     elif ratio > 1.2:
-        orientation = "横"
+        orientation = "landscape"
     elif ratio < 0.9:
-        orientation = "竖"
+        orientation = "portrait"
     else:
-        orientation = "方"
+        orientation = "square"
 
     notes = []
     if not audios:
-        notes.append("无音轨")
+        notes.append("no audio")
     if fps and (fps < 23 or fps > 61):
-        notes.append(f"非标帧率 {fps}")
-    if orientation == "竖":
-        notes.append("需留安全区")
+        notes.append(f"off-spec fps {fps}")
+    if orientation == "portrait":
+        notes.append("needs safe margins")
 
     return {
         "file": path.name,
@@ -80,7 +80,7 @@ def summarise(path: Path) -> dict:
         "fps": fps,
         "orientation": orientation,
         "codec": video.get("codec_name"),
-        "audio": f"{len(audios)} 轨" if audios else "无",
+        "audio": f"{len(audios)} track(s)" if audios else "none",
         "size_mb": round(int(fmt.get("size") or 0) / 1048576, 1),
         "notes": "；".join(notes),
     }
@@ -101,7 +101,7 @@ def collect(paths: list[str]) -> list[Path]:
 
 
 def to_table(rows: list[dict]) -> str:
-    head = "| 文件 | 时长 | 分辨率 | 帧率 | 画幅 | 编码 | 音频 | 大小 | 备注 |"
+    head = "| File | Length | Resolution | FPS | Orient | Codec | Audio | Size | Notes |"
     sep = "|---|---|---|---|---|---|---|---|---|"
     lines = [head, sep]
     for r in rows:
@@ -112,12 +112,12 @@ def to_table(rows: list[dict]) -> str:
         )
     total = round(sum(r["duration"] for r in rows), 1)
     lines.append("")
-    lines.append(f"共 {len(rows)} 个片段，总时长 {total}s")
+    lines.append(f"{len(rows)} clips, {total}s total")
     return "\n".join(lines)
 
 
 def contact_sheet_cmd(path: Path, every: int) -> str:
-    """给出抽帧拼图的 ffmpeg 命令，供 agent 看图判断内容。"""
+    """Print the ffmpeg command for a contact sheet, so content can be inspected."""
     return (
         f'ffmpeg -v error -i "{path.name}" -vf '
         f'"fps=1/{every},scale=320:-1,tile=4x4" -frames:v 1 '
@@ -126,20 +126,20 @@ def contact_sheet_cmd(path: Path, every: int) -> str:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="用 ffprobe 盘点素材目录")
-    ap.add_argument("paths", nargs="+", help="目录或视频文件")
-    ap.add_argument("--json", action="store_true", help="输出 JSON")
+    ap = argparse.ArgumentParser(description="Inventory a media directory with ffprobe")
+    ap.add_argument("paths", nargs="+", help="directories or video files")
+    ap.add_argument("--json", action="store_true", help="print JSON")
     ap.add_argument("--contact", type=int, metavar="N",
-                    help="为每个片段给出每 N 秒抽帧拼图的 ffmpeg 命令")
+                    help="print a contact-sheet ffmpeg command every N seconds per clip")
     args = ap.parse_args()
 
     if not shutil.which("ffprobe"):
-        print("找不到 ffprobe，请先安装 ffmpeg。", file=sys.stderr)
+        print("ffprobe not found. Install ffmpeg first.", file=sys.stderr)
         return 2
 
     files = collect(args.paths)
     if not files:
-        print("没有找到视频文件。", file=sys.stderr)
+        print("No video files found.", file=sys.stderr)
         return 1
 
     rows = []
@@ -147,14 +147,14 @@ def main() -> int:
         try:
             rows.append(summarise(f))
         except subprocess.CalledProcessError:
-            print(f"跳过（ffprobe 读不了）：{f.name}", file=sys.stderr)
+            print(f"Skipping (ffprobe cannot read): {f.name}", file=sys.stderr)
 
     if args.json:
         print(json.dumps(rows, ensure_ascii=False, indent=2))
     else:
         print(to_table(rows))
         if args.contact:
-            print("\n抽帧拼图命令（看清每个片段里是什么）：")
+            print("\nContact-sheet commands (to see what is in each clip):")
             for f in files:
                 print("  " + contact_sheet_cmd(f, args.contact))
     return 0

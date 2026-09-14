@@ -1,277 +1,286 @@
-# 剪辑手艺 · 细则
+# Cutting Craft · Detail
 
 ---
 
-## 一、中英术语对照
+## 1. Glossary (English to Chinese)
 
-| 中文 | English | 说明 |
+| English | 中文 | Note |
 |---|---|---|
-| 镜头 | shot | 一次不间断拍摄的画面 |
-| 景别 | shot scale | 远景 ELS／全景 LS／中景 MS／近景 MCU／特写 CU／大特写 ECU |
-| 硬切 | hard cut | 默认手法，占全片绝大多数 |
-| 叠化 | dissolve | 两镜重叠，用于时间流逝、抒情、梦境 |
-| 划像/滑移 | wipe/slide | **慎用**，易廉价 |
-| 淡入淡出 | fade | 段落级分隔 |
-| 跳切 | jump cut | 时间省略，或焦虑感 |
-| 匹配剪 | match cut | 形状/动作/概念匹配，最高级衔接 |
-| 动势匹配剪 | movement match cut | 用运动方向/速度对接 |
-| 声音先入 | J cut | 下一镜声音提前进入 |
-| 声音滞后 | L cut | 上一镜声音延续 |
-| 声音桥 | sound bridge | 持续声音跨接两个空间 |
-| 卡点 | cut to beat | 切在音乐重拍上 |
-| 反应镜头 | reaction shot | 剪在说话人之后听者的脸 |
-| 过肩 | over-the-shoulder | 对话场景主力机位 |
-| 建立镜头 | establishing shot | 开场交代环境 |
-| 插入/切出 | insert / cutaway | 强调细节 / 切离主线再切回 |
-| 动接动·静接静 | — | 中文体系核心规则 |
-| 两极镜头 | — | 远景直接切特写（或反之），重锤，不可常用 |
-| 轴线·越轴 | 180° rule | |
-| 三角形原理 | triangle principle | 对话场景机位布局 |
-| 呼吸感 | — | 段落能吸（拉长）能吐（连切） |
-| 拉片 | shot-by-shot analysis | 逐镜拆解参考片 |
-| 剪接 / 剪辑 | cutting / editing | 同一件事的两种中文叫法：**剪接**偏传统与港台用法，**剪辑**偏当代大陆用法，混用不算错 |
-| 剪接点 | cut point | **两个镜头画面相连接的点** |
-| 无技巧剪辑 | straight-cut editing | 不用任何光学技巧完成时空转换 |
-| 光学技巧 | optical effects | 淡入淡出、叠化、划像等"画面附加技巧" |
-| 场面调度 | mise-en-scène / staging | |
-| 长镜头 | long take | |
+| shot | 镜头 | One uninterrupted take |
+| shot scale | 景别 | ELS 远景 / LS 全景 / MS 中景 / MCU 近景 / CU 特写 / ECU 大特写 |
+| hard cut | 硬切 | The default. The vast majority of any film |
+| dissolve | 叠化 | Two shots overlapping. For passing time, lyricism, dream |
+| wipe / slide | 划像 / 滑移 | **Use sparingly.** Reads cheap |
+| fade | 淡入淡出 | Separates sequences |
+| jump cut | 跳切 | Elides time, or creates unease |
+| match cut | 匹配剪 | Matched shape, action or idea. The most sophisticated join |
+| movement match cut | 动势匹配剪 | Joined by direction or speed of movement |
+| J cut | 声音先入 | Next shot's sound arrives early |
+| L cut | 声音滞后 | Previous shot's sound lingers |
+| sound bridge | 声音桥 | Continuous sound spanning two spaces |
+| cut to beat | 卡点 | Cutting on the musical accent |
+| reaction shot | 反应镜头 | The listener's face after the speaker |
+| over-the-shoulder | 过肩 | The workhorse angle of dialogue |
+| establishing shot | 建立镜头 | Sets the environment at the open |
+| insert / cutaway | 插入 / 切出 | Detail emphasis / leaving the main line and returning |
+| motion-to-motion · static-to-static | 动接动 · 静接静 | Core rule of the Chinese system |
+| extreme scale contrast | 两极镜头 | Cutting a wide straight to a close-up, or the reverse. A sledgehammer, not for frequent use |
+| axis · crossing it | 轴线 · 越轴 | 180° rule |
+| triangle principle | 三角形原理 | Camera layout for dialogue |
+| breathing (breath) | 呼吸感 | A sequence can inhale (hold longer) and exhale (cut rapidly) |
+| shot-by-shot breakdown | 拉片 | Analysing a reference film shot by shot |
+| cutting / editing | 剪接 / 剪辑 | Two Chinese words for the same thing: 剪接 leans traditional and Hong Kong/Taiwan, 剪辑 leans contemporary mainland. Mixing them is not an error |
+| cut point | 剪接点 | **The point at which two shots are joined** |
+| straight-cut editing | 无技巧剪辑 | Transitions of time and space made with no optical effects at all |
+| optical effects | 光学技巧 | Fades, dissolves, wipes. The "added picture techniques" |
+| mise-en-scène / staging | 场面调度 | |
+| long take | 长镜头 | |
 
 ---
 
-## 二、六法则的完整机制
+## 2. The six rules in full
 
-**权重**：情感 51%／故事 23%／节奏 10%／视线追踪 7%／二维平面 5%／三维空间 4%。
+**Weights**: emotion 51% / story 23% / rhythm 10% / eye-trace 7% / two-dimensional plane 5% / three-dimensional space 4%.
 
-**机制（原文）**：
-1. 冲突时"**从下往上牺牲**"，先舍三维空间，再舍二维平面、视线追踪、节奏……但**绝不在情感之前牺牲故事**。
-2. **不对称掩盖**：满足高位法则会掩盖低位的问题，**反之不成立**。"视线追踪对了，轴线的小问题会被弱化；但轴线对了而视线追踪没做，这一刀就是失败的。"
-3. 前三条（情感/故事/节奏）绑定得极紧（"像原子核里质子与中子的键"）；往下三条的约束依次变弱。
-4. 补充：**多数时候六条可以同时满足**，不要在多者可得时接受更少，六法则是**优先级表**，不是偷懒的借口。
+**How it works**:
 
-**反例（反直觉证据）**：多机位电视情景喜剧，摄像机同时拍，演员的空间关系永远"正确"，**但这丝毫不能阻止大量坏剪辑的出现**。所以"空间连续"根本不是剪辑质量的核心。
+1. When they conflict, **sacrifice from the bottom up**. Give up three-dimensional space first, then the two-dimensional plane, eye-trace, rhythm. But **never sacrifice story before emotion**.
+2. **Asymmetric masking.** Satisfying a higher rule masks problems with lower ones, and **not the reverse**. "Get eye-trace right and a small axis problem is weakened. Get the axis right while ignoring eye-trace, and the cut fails."
+3. The top three (emotion, story, rhythm) are bound extremely tightly, "like the bonds between protons and neutrons in a nucleus". The lower three weaken progressively.
+4. Added: **most of the time all six can be satisfied at once.** Do not accept less when more is available. The six rules are a **priority table**, not an excuse for laziness.
 
-**眨眼理论**：人在思考转折时会眨眼；好切点≈观众心里眨眼的位置。反复通看，每次都在同一处走神，那里就是问题所在。
+**A counter-intuitive piece of evidence.** Multi-camera television comedy: the cameras roll simultaneously, so the actors' spatial relationship is always "correct". **That does not prevent a stream of bad cuts.** Spatial continuity is not the core of editing quality.
 
----
-
-## 二之二、六戒律（与六法则互补）
-
-六法则回答"切点冲突时怎么取舍"；六戒律回答"什么样的切点从一开始就不该做"：
-
-1. **没有正当理由，绝不切**（Never make a cut without a positive reason）。与"剪辑点四问"里的 why 同源。
-2. **拿不准切在哪一帧时，宁可切晚（cut long rather than short）**，多留几帧的代价远小于切早了丢掉表演。
-3. **尽可能"在运动中切"**（cut "in movement"）。动作剪辑点的原始表述。
-4. **"新鲜"优于"陈旧"**（the "fresh" is preferable to the "stale"）。在艺术里"显而易见"是罪；重复同一个招数会失效。
-5. **所有场景都应以"持续的动作"开始和结束**，让每一场有进出，避免"冷掉的咖啡"。
-6. **为"恰当的价值"而切，不为"恰当的对位"而切**（Cut for proper values rather than for proper "matches"）。
-
-**第 6 条的展开（重要）**：如果戏剧要求从全景切到特写，那就必须切，**哪怕动作或站位对不上**。办法按优先级是：① **直接忽略不匹配**，经验观察是"令人吃惊的是，坏匹配常常完全没被观众注意到"；② 若必须切且匹配太糟，改切到一个**更近的特写**，用景别的收缩把不良的站位/动作挡在外面。
-
-这是"满足高位法则会掩盖低位问题"的**另一种说法**，两条独立路径得出同一结论：**戏剧价值 > 技术对位**。
+**The blink theory.** People blink when their thought turns, so a good cut point sits roughly where the audience would blink. Watch repeatedly; wherever you drift off at the same spot every time is the problem.
 
 ---
 
-## 二之三、剪接点体系（两大类）
+## 2b. The six commandments (complementary to the six rules)
 
-**剪接点＝两个镜头画面相连接的点。**中文体系按**两大类**划分，比单层的"动作/情绪/节奏"更完整，因为**声音剪接点被单列**出来。
+The six rules answer "how do I trade off when cut points conflict". The six commandments answer "what kind of cut point should never be made in the first place".
 
-### 一、画面剪接点（三种）
+1. **Never make a cut without a positive reason.** Same source as the "why" of the four questions.
+2. **When undecided about the exact frame, cut long rather than short.** The cost of a few extra frames is far smaller than losing a performance by cutting early.
+3. **Whenever possible, cut in movement.** The original statement of the action cut point.
+4. **The fresh is preferable to the stale.** In art, the obvious is a sin; repeating the same trick stops working.
+5. **All scenes should begin and end with continuing action.** Give every scene an entrance and an exit, and avoid "cold coffee".
+6. **Cut for proper values rather than for proper matches.**
 
-**1. 动作剪接点**（含歌舞、戏曲的舞蹈动作）
-- 以**形体动作**为基础，在动作的**转折处**确定剪接点。
-- **把停顿的部分全部留在上一个镜头。**
-- 动作附带情绪时要另找剪点：正常"坐→起"剪在转折处；"气愤地一下站起来"的节奏完全不同。
+**Commandment 6 expanded, and it matters.** If the drama demands a cut from a wide to a close-up, make it, **even if the action or the staging does not match**. In order of preference: first, **ignore the mismatch**, because the observation is that "remarkably often the bad match goes completely unnoticed"; second, if the cut must happen and the match is too poor, cut to a **tighter close-up** and let the contraction of scale push the bad staging or action out of frame.
 
-**2. 情绪剪接点**
-- 以**心理动作**为基础，以喜怒哀乐的表情为依据。
-- **可以放长，绝不能短。**
-- 关键性质：**不受人物外部动作的局限**。画面里没有语言、也没有形体动作，但人物的心理动作仍在继续、情绪仍在延伸，这时候镜头就得留着。
-- 它"看不见也摸不着"，没有固定规律，全凭对剧情和人物内心的理解。**这一项最能检验剪辑者的功力。**
-- 对照：形体动作的剪接点"只要掌握动作规律就容易把握"，情绪剪接点没有这种便宜可占。
-
-**3. 节奏剪接点**
-- 主要用在**没有对白**的画面：以情节性质和剧情节奏线为基础，**用比较的方式**处理镜头长度。
-- 在**过场戏、群众场面、战斗场面**中作用特别大。
-
-### 二、声音剪接点（三种）
-对白剪接点、音乐剪接点、音响效果剪接点。
-- 声画合一／声画对立／两者结合，都要在选画面剪接点的**同时**考虑声音的前接点。
-- 前期录音的片子声画连带关系强，对剪接点的准确性要求更高。
+This is another route to "satisfying a higher rule masks problems with lower ones". Two independent paths reach the same conclusion: **dramatic value beats technical match**.
 
 ---
 
-## 三、切点检查清单
+## 2c. The cut-point system (two families)
 
-**信息**：这一刀之后有**新信息**吗？观众此刻**想知道什么**，这一刀是回答它，还是吊着它？
+**A cut point (剪接点) is the point at which two shots are joined.** The Chinese system divides them into **two families**, which is more complete than a single list of action, emotional and rhythmic, because **sound cut points are a family of their own**.
 
-**动作**：切在动作**中段**（不是做完之后）？出画/入画可作衔接依据？有遮挡物可用？
+### Family one: picture cut points (three kinds)
 
-**视线**：相邻镜头视线方向一致？瞳孔/头部位置连贯（特写尤其致命）？
+**1. Action cut point (动作剪接点)**, including dance in opera and musical numbers.
 
-**方向**：是否越轴？越轴有无动机（中立镜头 / 镜头内运动越轴 / 明确意图）？银幕运动方向是否保持（左出右入）？
+- Based on **physical movement**. The cut point goes at the **turn of the movement**.
+- **Leave the pause entirely in the outgoing shot.**
+- When the movement carries emotion, find a different point: an ordinary "sit to stand" cuts at the turn, but "stands up in anger" has an entirely different rhythm.
 
-**景别**：是否"同景别硬接"？景别变化 ≥ 一档？两极镜头是否过频？
+**2. Emotional cut point (情绪剪接点)**
 
-**环境**：光位、色温、色调是否相容？不相容时，调色统一 / 转场遮挡 / 插入镜头隔断？
+- Based on **psychological action**, using the expression of joy, anger, sorrow and pleasure as its evidence.
+- **It can be held long. It must never be short.**
+- The defining property: **it is not bound by the character's external action.** There may be no dialogue and no physical movement on screen, but the psychological action is still running and the emotion is still extending. That is when the shot has to stay.
+- It is "invisible and intangible", with no fixed rule, resting entirely on your reading of the drama and the character's inner life. **This is the item that best tests an editor's ability.**
+- By contrast, an action cut point can be mastered by learning the rules of movement. An emotional cut point offers no such shortcut.
 
-**声音**：这一刀需要 J cut 还是 L cut？有没有动作缺了对应音效？
+**3. Rhythmic cut point (节奏剪接点)**
+
+- Used mainly on **picture without dialogue**. It takes the nature of the scene and the rhythm line of the drama as its base, and **settles shot length by comparison**.
+- It matters most in **transitions, crowd scenes and battle scenes**.
+
+### Family two: sound cut points (three kinds)
+
+Dialogue, music, and sound-effect cut points.
+
+- Whether sound and picture agree, oppose, or combine, the sound cut point must be considered **at the same time** as the picture cut point.
+- On films recorded before shooting, sound and picture are tightly bound and the accuracy demanded of the cut point is higher.
 
 ---
 
-## 四、节奏：三层模型
+## 3. Cut-point checklist
 
-**节奏的完整定义**：节奏是**时间、运动、能量**，由 **timing（时值）、pacing（步调）、trajectory phrasing（轨迹分句）** 塑形，目的是制造**张力与释放的循环**。剪辑师是在**编舞**（editing as choreography），每一个"电影乐句"（cine-phrase）由若干镜头构成。
+**Information**: does this cut deliver **new information**? What does the audience **want to know** right now, and does this cut answer it or withhold it?
 
-**三种节奏（累积关系，不是并列）**：
+**Action**: is the cut at the **middle of the movement**, not after it? Can an entrance or exit serve as the join? Is there something to wipe behind?
 
-| 类型 | 形状 | 依据 |
+**Eye-line**: do adjacent shots agree on direction? Is the pupil or head position continuous? In close-up this is where it kills you.
+
+**Direction**: has the axis been crossed? Is there a motive (a neutral shot, movement within the shot, a deliberate intent)? Is screen direction preserved, exiting left and entering right?
+
+**Scale**: is this a hard cut between two shots of the same scale? Does the scale change by at least one step? Is extreme contrast being used too often?
+
+**Environment**: are light direction, colour temperature and palette compatible? If not, grade for consistency, mask with a transition, or separate them with an insert.
+
+**Sound**: does this cut need a J cut or an L cut? Is any action missing its sound?
+
+---
+
+## 4. Rhythm: the three-layer model
+
+**The full definition.** Rhythm is **time, movement and energy**, shaped by **timing, pacing and trajectory phrasing**, in order to create **cycles of tension and release**. The editor is **choreographing**. Each cine-phrase is built from several shots.
+
+**Three kinds of rhythm, cumulative rather than parallel**:
+
+| Kind | Shape | Rests on |
 |---|---|---|
-| **物理节奏** Physical | 有形/有声的**运动**流动 | 运动的**大小、速度、力度、方向**；靠镜头内与镜头间运动的弧线成形 |
-| **情绪节奏** Emotional | 在物理节奏之上，把运动**重新赋义为情绪负载** | 依赖物理节奏才能生效 |
-| **事件节奏** Event | 用画面与声音的运动 + 情绪的运动来**传达信息** | 依赖前两者 |
+| **Physical rhythm** (物理节奏) | The flow of visible and audible **movement** | The **size, speed, force and direction** of movement. Formed by the arcs of movement within shots and across the joins |
+| **Emotional rhythm** (情绪节奏) | Movement **re-signified as emotional weight**, layered on the physical | Depends on physical rhythm to take effect |
+| **Event rhythm** (事件节奏) | Picture and sound movement plus emotional movement, used to **carry information** | Depends on both of the above |
 
-原文："三种节奏最终只是同一个节奏的三股线。"，**分开是为了定位问题**：说"节奏不对"没法改；说"物理节奏没问题但情绪节奏没建立"就能动手。
+"In the end the three kinds of rhythm are three strands of one rhythm." **Separating them is for locating the problem.** Saying "the rhythm is off" gives you nothing to change. Saying "the physical rhythm is fine but the emotional rhythm never establishes" gives you somewhere to put your hands.
 
-**张力与释放的循环**是节奏的目的，也是判断依据：一段戏要么在积累张力，要么在释放，**长期停在中间＝没有节奏**。
+**Cycles of tension and release** are the purpose of rhythm and also the test: a scene is either accumulating tension or releasing it. **Sitting in the middle for a long stretch means there is no rhythm.**
 
-**镜头长度决策**
-| 内容 | 趋势 |
+**Deciding shot length**
+
+| Content | Tendency |
 |---|---|
-| 抒情 / 瑜伽 / 睡眠 / 冥想 | 长、少、缓 |
-| 运动 / 动作 / 紧张 / 追逐 | 短、多、快 |
-| 信息交代 / 建立环境 | 中长（给足阅读时间） |
-| 高潮前的积累 | 递次缩短 |
-| 高潮点 | 突然一记长镜或一记极短镜（对比出重音） |
+| Lyrical / yoga / sleep / meditation | Long, few, slow |
+| Sport / action / tension / chase | Short, many, fast |
+| Exposition / establishing environment | Medium-long, enough time to read |
+| Build-up before a peak | Progressively shorter |
+| The peak itself | A sudden long shot, or a sudden very short one, to land the accent |
 
-**常见病灶**：全程匀速（没有重音，观众疲劳）｜全程卡点（过于工整，变 MTV）｜节奏与题材相反（助眠广告用跳切）｜高潮处剪辑太碎（把情绪剪没了）。
-
----
-
-## 五、声音设计清单
-
-- [ ] 全片有**持续声音底**（环境音/音乐）把段落缝起来吗？
-- [ ] 关键动作配了**动作音**吗？（缺音＝画面不完整）
-- [ ] 用 **J cut** 预告下一场？用 **L cut** 延续上一场情绪？
-- [ ] 音乐有**能量走向**吗？高潮前有推进（crescendo / drop）吗？
-- [ ] **沉默**有动机吗？（戴耳机＝合理；莫名静音＝像播放故障）
-- [ ] 卡点是精确对齐，还是全片糊在同一拍上？
-- [ ] 转场处声音有设计吗（声音先于画面完成转场）？
+**Common failures**: uniform pacing throughout, so nothing is accented and the audience tires / cutting on every beat, so it becomes a music video / rhythm opposed to the subject, such as jump cuts in a sleep aid / over-cutting at the peak, which cuts the emotion away.
 
 ---
 
-## 六、蒙太奇分类
+## 5. Sound checklist
 
-**先站队：两条风格路线。**
-- **蒙太奇（构造）**，意义产生在**镜头之间**，剪辑是主动的制造者。适合表达、宣传、情绪爆发、时间压缩。
-- **写实（记录）**，尊重时空连续，剪辑只负责"不打断"。适合生活质感、表演、压迫与等待。主要手段是长镜头、纵深调度、声音连续、无技巧剪辑。
-- 两条路线都能出好片，但**技法互相打架**，别在一支片子里两头下注。
+- [ ] Is there a **continuous sound bed** (ambience or music) stitching the sequences together?
+- [ ] Does every significant action have its **action sound**? A missing sound makes the picture feel incomplete.
+- [ ] Is a **J cut** used to preview the next scene? An **L cut** to carry the previous emotion?
+- [ ] Does the music have an **energy arc**? Is there a build before the peak, a crescendo or a drop?
+- [ ] Is the **silence** motivated? Headphones going on is motivated; silence for no reason reads as a playback fault.
+- [ ] Is the beat-cutting precise, or is the whole film smeared across one beat?
+- [ ] Is the sound designed at the transitions, with sound completing the transition before the picture does?
 
-**特写是蒙太奇最锋利的武器**：它把脸或物从空间里抽出来，脱离了环境关系，于是**细节本身成为意义**。这也是为什么特写用得越多，越接近"构造"而非"记录"。
+---
 
+## 6. Montage
 
-**按层级**：微观（镜头间）／中观（段落的转场与时空压缩）／宏观（整片结构）。
+**Take a side first: the two stylistic routes.**
 
-**叙事类**
+- **Montage (constructive).** Meaning is produced **between shots**; the edit is an active author. Suits expression, persuasion, emotional peaks, compressed time.
+- **Realism (observational).** Respect the continuity of time and space; the edit only has to avoid interrupting. Suits texture of life, performance, pressure and waiting. Its main tools are the long take, staging in depth, continuous sound and straight-cut editing.
+- Both routes produce good films, but **the techniques fight each other**. Do not bet on both in one piece.
 
-| 类型 | 机制 |
+**The close-up is montage's sharpest weapon.** It pulls a face or an object out of space, detaching it from its environmental relations, so that **the detail itself becomes the meaning**. This is why the more close-ups a film uses, the closer it sits to construction rather than observation.
+
+**By level**: micro, between shots / mid, transitions and compressed time between sequences / macro, the structure of the whole film.
+
+**Narrative types**
+
+| Type | Mechanism |
 |---|---|
-| 连续蒙太奇 | 顺序推进，最常用 |
-| 平行蒙太奇 | 两线同时进行，交替展示 |
-| 交叉蒙太奇 | 越切越快，制造紧迫（格里菲斯"最后一分钟营救"） |
-| 积累蒙太奇 | 同类镜头堆叠出情绪/概念 |
-| 重复蒙太奇 | 关键物/动作/台词再现，强化母题 |
-| 叫板蒙太奇 | 一正一反排列，形成对抗 |
+| Sequential (连续蒙太奇) | Straight advance. The most common |
+| Parallel (平行蒙太奇) | Two lines running at once, alternating |
+| Cross-cutting (交叉蒙太奇) | Cutting faster and faster to build urgency. Griffith's last-minute rescue |
+| Accumulative (积累蒙太奇) | Stacking similar shots to build an emotion or an idea |
+| Repetitive (重复蒙太奇) | Returning to a key object, action or line to reinforce the motif |
+| Call-and-response (叫板蒙太奇) | Alternating one against its opposite to form a contest |
 
-**表意类**：隐喻（A 比喻 B）／对比／象征／心理（内心外化、幻觉、回忆）。
-
----
-
-## 七、转场类型与选用纪律
-
-| 转场 | 用 | 别用 |
-|---|---|---|
-| **硬切** | **默认**，90% 以上 | — |
-| **叠化** | 时间流逝、抒情、梦境 | 动作场面（会软掉）、需要力度处 |
-| **划像/滑移** | 复古/戏仿/新闻包装 | **奢侈品、高端品牌、正剧**（判为廉价） |
-| **淡入淡出** | 段落分隔、首尾、大时间跳 | 段落内部（太重） |
-| **跳切** | 时间省略、焦虑/混乱、vlog 感 | 需要平顺的抒情段落 |
-| **匹配剪** | 形状/动作/概念呼应 | 滥用显刻意 |
-| **声音转场** | 几乎所有好片子的隐形功臣 | — |
-| **黑场** | 分隔、大时间跳、严肃停顿 | 频繁使用像断片 |
-
-### 无技巧剪辑：不用光学技巧怎么转场
-
-"无技巧剪辑"指**不用任何画面附加技巧**（淡入淡出、叠化、划像等），全靠内容本身完成时间、空间、场景、镜头之间的转换。
-
-- 它**不等于可以随便跳**："并不意味着时空、场景、镜头间可随主观意念随意转换，绝不是乱蹦乱跳。"
-- 它对创作者要求**更高、难度更大**，而且**需要条件**：靠**特写、景物镜头、运动镜头、人物动作、声音**来提供衔接依据。
-- 生活流、写实质感的片子主要靠它，一旦用了光学技巧，真实感就被打断了。
+**Expressive types**: metaphor, A standing for B / contrast / symbol / psychological, externalising the inner world, hallucination, memory.
 
 ---
 
-## 八、机位与轴线（三角形原理）
+## 7. Transitions and when to use them
 
-**轴线＝两位中心人物的"头部连线"（line of interest）**。要点：身体姿态不重要，**"是头在起作用"**，头是人声之源，眼睛是人最强的注意力指向器。所以**轴线永远画在两个头之间**，哪怕两人背对背。
-
-**核心戒律**：**选定轴线的一侧，并守住它**（select one side of the line of interest and stick to it）。这是电影语言中最被尊重的规则之一。跨到另一侧的两个机位**无法**互接，因为人物在画面上会左右互换，观众会迷失方位。
-
-**三角形机位的三种基本变体**（机位落在与轴线平行的"底边"上）：
-
-| 变体 | 机位在哪 | 效果 |
+| Transition | Use it for | Avoid it for |
 |---|---|---|
-| **外反打** External reverse angles | 两人**背后**，向内收拢，靠近轴线 | 同时覆盖两人（各带一半背景） |
-| **内反打** Internal reverse angles | 两人**之间**，向外撇 | 分别单拍各人，接近正面 |
-| **平行位** Parallel positions | 底边上，光轴互相**平行** | 分别单拍，侧脸（profile） |
+| **Hard cut** | **The default.** Over 90% | — |
+| **Dissolve** | Passing time, lyricism, dream | Action scenes, which go soft; anywhere that needs force |
+| **Wipe / slide** | Retro, parody, news packaging | **Luxury, premium brands, serious drama.** It reads as cheap |
+| **Fade** | Separating sequences, opening and closing, large jumps in time | Inside a sequence, where it is too heavy |
+| **Jump cut** | Eliding time, anxiety or confusion, a vlog feel | Lyrical passages that need smoothness |
+| **Match cut** | Echoing shape, action or idea | Overuse shows as contrivance |
+| **Sound transition** | The invisible workhorse of almost every good film | — |
+| **Black** | Separation, large time jumps, a serious pause | Frequent use and the film reads as broken |
 
-另有**主观机位**：机位在轴线上背对背，各自成为**画面外那个人**的主观视角（POV）。
+### Straight-cut editing (无技巧剪辑): how to transition without optical effects
 
-三种变体可以组合，得到**三角形内的七个机位**；除内反打与平行位只单拍一人外，其余机位都能成对覆盖两人。
+Straight-cut editing means completing the transitions of time, space, scene and shot **with no added picture techniques at all** (no fade, no dissolve, no wipe), resting entirely on content.
 
-**越轴的合法办法**（规则可以破，但要用正确方法）：
-1. 用**中立镜头 / 骑轴镜头**过渡；
-2. 让摄影机**在镜头内运动**越轴（观众看得见过程）；
-3. 用第三人、物体或一个**明确的插入镜头**作桥梁；
-4. 明确意图（制造错位、混乱）。此时按六法则，牺牲"二维平面"换"情感"是正当的。
+- It **does not mean jumping around freely**: "it does not mean that time, space, scene or shot can be rearranged at will. It absolutely is not leaping about."
+- It demands **more** of the maker and is **harder**, and it **has conditions**. It needs **close-ups, scenery shots, moving shots, character action and sound** to supply the join.
+- Films with a slice-of-life or realist texture rely on it. The moment an optical effect appears, the realism breaks.
 
-**视线匹配**：A 看画面右 → B 应看画面左；两镜视线高度应大致相当（对话双方身高不同时，用机位高度或俯仰角补偿）。
+---
 
-## 九、拉片表
+## 8. Camera position and the axis (the triangle principle)
 
-| # | 时间码 | 时长 | 景别 | 机位/运动 | 内容 | 声音 | 切点类型 | 为什么在这里切 | 承接依据 |
+**The axis is the line between the two central characters' heads** (line of interest). The point: body posture does not matter, **the heads do the work**. The head is the source of speech and the eyes are the strongest attention pointers a person has. So **the axis is always drawn between the two heads**, even when the two are back to back.
+
+**The core rule**: **select one side of the line of interest and stick to it.** This is among the most respected rules in film language. Two camera positions on opposite sides **cannot** be cut together, because the characters swap left and right on screen and the audience loses its bearings.
+
+**The three basic variants** of the triangle, with the positions sitting on the base parallel to the axis:
+
+| Variant | Where the camera sits | Effect |
+|---|---|---|
+| **External reverse angles** (外反打) | Behind both, angled in, close to the axis | Covers both at once, each with half the background |
+| **Internal reverse angles** (内反打) | Between the two, angled out | Covers each individually, near frontal |
+| **Parallel positions** (平行位) | On the base, optical axes parallel | Covers each individually, in profile |
+
+There is also the **subjective position**: on the axis, back to back, each becoming the point of view of the character not in frame.
+
+The three variants combine into **seven camera positions inside the triangle**. Except for the internal and parallel positions, which cover one person each, the rest can be paired to cover both.
+
+**Legitimate ways to cross the axis** (the rule can be broken, but properly):
+
+1. Bridge with a **neutral or on-axis shot**.
+2. Let the camera **move across the axis within the shot**, so the audience sees it happen.
+3. Use a third person, an object, or an **explicit insert** as the bridge.
+4. Make the intent clear, to create dislocation or confusion. Here the six rules apply, and sacrificing the two-dimensional plane for emotion is justified.
+
+**Eye-line match**: if A looks to the right of frame, B should look to the left. The eye height of the two shots should be roughly equal; when the speakers are of different heights, compensate with camera height or with tilt.
+
+## 9. Shot-by-shot sheet
+
+| # | Timecode | Length | Scale | Position / move | Content | Sound | Cut-point type | Why cut here | Join |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | | | | | | | | | |
 | 2 | | | | | | | | | |
 
-**填完必答四问**
-1. 镜头总数 / 平均镜长 / 最短最长镜头？
-2. 切点依据分布（动作 / 情绪 / 节奏）各占多少？
-3. J cut / L cut / 声音桥出现在哪几处？
-4. **把第 N 与 N+1 镜对调会怎样？** ，找出"顺序不可颠倒"处，即叙事骨架。
+**Four questions to answer once it is filled in**
+
+1. How many shots in total, what is the average length, and what are the shortest and longest?
+2. What is the distribution of cut-point reasons: action, emotion, rhythm?
+3. Where do J cuts, L cuts and sound bridges appear?
+4. **What happens if you swap shot N with shot N+1?** Find where the order cannot be reversed. That is the narrative spine.
 
 ---
 
-## 十、剪辑阶段论
+## 10. Stages of the edit
 
-| 阶段 | 目标 | 纪律 |
+| Stage | Goal | Discipline |
 |---|---|---|
-| 初剪/组装 | 按剧本排好，看整体长度 | 不纠结细节 |
-| 粗剪 Rough Cut | 结构成型：段落顺序、节奏骨架、临时音乐 | 允许特效/调色未完成 |
-| 精剪 Fine Cut | 逐帧修切点、声音设计、转场、字幕 | 剪辑真正发生的地方 |
-| 定剪/锁片 | 冻结画面，交付配乐/混音/调色 | 之后改动代价极高 |
+| Assembly (初剪) | Put it in script order and see the overall length | Do not fuss over detail |
+| Rough cut (粗剪) | Structure takes shape: sequence order, rhythmic skeleton, temporary music | Effects and grading may be unfinished |
+| Fine cut (精剪) | Frame-by-frame cut points, sound design, transitions, captions | This is where editing actually happens |
+| Lock (定剪) | Freeze the picture, hand over to score, mix and grade | Changes afterwards are extremely expensive |
 
-**戒律**：最好的剪辑是**看不见的**；不要为剪辑而剪辑。
+**The commandment**: the best editing is **invisible**. Do not cut for the sake of cutting.
 
 ---
 
-## 十一、成片自查清单
+## 11. Final self-check
 
-- [ ] 有"为剪而剪"的切点吗（说不出 why）？
-- [ ] 有"同景别硬接"吗？
-- [ ] 情绪高潮处镜头是不是被剪短了？（该长的时候短＝情绪被杀）
-- [ ] 音乐有能量走向吗？高潮前有推进吗？
-- [ ] 有动作缺了对应音效吗？
-- [ ] 开场 3 秒有钩子或建立镜头吗？
-- [ ] 结尾是自然收束，还是"音乐突然断掉"？
-- [ ] 每个切点都卡在重拍上吗（过于工整＝MTV 感）？
-- [ ] 字幕压住脸了吗？对比度够吗？
-- [ ] 有一段可以整体删掉而不影响理解吗？（有＝该删）
+- [ ] Any cut made for its own sake, with no reason you can state?
+- [ ] Any hard cut between two shots of the same scale?
+- [ ] At the emotional peak, was the shot cut short? Cutting short when it should hold kills the emotion.
+- [ ] Does the music have an energy arc? Is there a build before the peak?
+- [ ] Is any action missing its sound?
+- [ ] Do the first three seconds carry a hook or an establishing shot?
+- [ ] Does the ending resolve, or does the music simply stop?
+- [ ] Is every cut landing on a beat, so the film feels too neat and turns into a music video?
+- [ ] Do captions sit across a face? Is the contrast enough?
+- [ ] Is there a section that could be removed entirely without loss? If so, it should be.

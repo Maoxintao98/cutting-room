@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="ECHOLAB 潮信文化" width="380">
+</p>
+
 # 剪辑室 Cutting Room
 
 [English](README.md) | **中文**
@@ -103,6 +107,7 @@ git clone https://github.com/Maoxintao98/cutting-room <项目路径>/.agents/ski
 cutting-room/
 ├── SKILL.md                     # Skill 入口与工作流定义
 ├── agents/openai.yaml           # Agent 元数据
+├── assets/logo.png              # 品牌标识
 ├── install.sh                   # 安装脚本
 ├── references/
 │   ├── craft.md                 # 剪辑语法：片种、切点四问、节奏模型、转场规则

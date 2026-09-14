@@ -1,25 +1,27 @@
 #!/usr/bin/env python3
-"""直连 DaVinci Resolve 官方 MCP 服务器（stdio），作为 MCP 工具不可用时的保底路径。
+"""Talk to the official DaVinci Resolve MCP server over stdio.
 
-当 Codex 已经把 ResolveMCP 挂成 MCP 工具时，直接用那些工具即可，不必跑这个脚本。
-当工具没挂上时（例如 MCP 进程没被拉起），用这个脚本仍然能完成同样的事。
+The fallback path for when the MCP tools are not mounted in the agent.
 
-用法
-    python3 resolve_mcp.py tools                 列出全部工具
-    python3 resolve_mcp.py status                查询 Resolve 是否在运行
-    python3 resolve_mcp.py search Timeline       搜索脚本 API
-    python3 resolve_mcp.py api Timeline,MediaPool 拉取指定类型的完整声明
-    python3 resolve_mcp.py docs                  开发者文档目录
-    python3 resolve_mcp.py run cut.py            执行一个脚本文件（沙箱 Python，可访问 Resolve API）
-    python3 resolve_mcp.py raw <tool> '<json>'   调用任意工具，参数为 JSON
+When the MCP tools are available, call those instead. This does the same work
+when they are not.
 
-脚本约定（工具本身的规定，写脚本时必须遵守）
-  - 参数名是 script，不是 code
-  - 沙箱预注入 resolve 和 project 两个变量，直接可用
-  - 用 result 变量返回结构化数据，print 的输出也会被一并捕获
-  - timeout 默认 10 秒，上限 60 秒
-  - 沙箱屏蔽 os、sys、pathlib、shutil；需要文件系统或子进程时改用
-    run_script_unsafe（把 script 参数换成脚本正文即可）
+Usage
+    python3 resolve_mcp.py tools                 list every tool
+    python3 resolve_mcp.py status                is Resolve running
+    python3 resolve_mcp.py search Timeline       search the scripting API
+    python3 resolve_mcp.py api Timeline,MediaPool  full declaration of given types
+    python3 resolve_mcp.py docs                  developer documentation
+    python3 resolve_mcp.py run cut.py            run a script file (sandboxed; resolve/project injected)
+    python3 resolve_mcp.py raw <tool> '<json>'   call any tool with JSON arguments
+
+Script contract, which the tools enforce
+  - the parameter is script, not code
+  - resolve and project are injected into the sandbox
+  - return structured data via result; print output is captured too
+  - timeout is 10s by default, 60s maximum
+  - the sandbox blocks os, sys, pathlib, shutil; for filesystem or
+    subprocess access use run_script_unsafe
 """
 
 from __future__ import annotations
@@ -39,7 +41,7 @@ TIMEOUT = 120
 class Client:
     def __init__(self, server: str = SERVER) -> None:
         if not Path(server).exists():
-            raise SystemExit(f"找不到 MCP 服务器：{server}")
+            raise SystemExit(f"MCP server not found: {server}")
         self.proc = subprocess.Popen(
             [server], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, text=True, bufsize=1,
@@ -72,7 +74,7 @@ class Client:
             "protocolVersion": "2024-11-05", "capabilities": {},
             "clientInfo": {"name": "cutting-room", "version": "1.0"}}})
         if not self._read(1, timeout=60):
-            raise SystemExit("MCP 握手失败。Resolve 是否已安装？")
+            raise SystemExit("MCP handshake failed. Is Resolve installed?")
         self._send({"jsonrpc": "2.0", "method": "notifications/initialized"})
 
     def call(self, name: str, arguments: dict, timeout: int = TIMEOUT) -> str:
@@ -82,7 +84,7 @@ class Client:
                     "params": {"name": name, "arguments": arguments}})
         msg = self._read(mid, timeout)
         if msg is None:
-            return "（无响应，可能超时）"
+            return "(no response, possibly timed out)"
         if "error" in msg:
             return "ERROR " + json.dumps(msg["error"], ensure_ascii=False)
         parts = [c.get("text", "") for c in msg.get("result", {}).get("content", [])]
@@ -113,12 +115,12 @@ def main(argv: list[str]) -> int:
             print(c.call("get_scripting_docs", {}))
         elif cmd == "run":
             if not rest:
-                return print("用法：run <脚本.py>") or 1
+                return print("usage: run <script.py>") or 1
             code = Path(rest[0]).read_text()
             print(c.call("run_script", {"script": code}, timeout=120))
         elif cmd == "raw":
             if len(rest) < 2:
-                return print("用法：raw <tool> '<json>'") or 1
+                return print("usage: raw <tool> '<json>'") or 1
             print(c.call(rest[0], json.loads(rest[1]), timeout=120))
         else:
             print(__doc__)
