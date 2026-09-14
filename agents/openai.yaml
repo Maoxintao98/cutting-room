@@ -1,0 +1,5 @@
+interface:
+  display_name: "剪辑室"
+  short_description: "剪辑、审片与 AIGC 选片，只给有证据、不掺人情的判断"
+  brand_color: "#2E5A88"
+  default_prompt: "使用 $cutting-room 审这条片子：先说成立的（含全片最好的一个镜头），再给六维评分和问题清单——按改动性价比排序，最后给能用/需修/重做的结论。"
