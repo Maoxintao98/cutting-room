@@ -1,123 +1,134 @@
 # Cutting Room
 
-**English** | [中文](README.zh-CN.md)
+[中文](README.zh-CN.md) | **English**
 
-A coding-agent skill for film editing. It does three things. It inventories your footage, cuts a timeline in DaVinci Resolve, and then grades its own work against a fixed standard before handing it over.
+A skill library for coding agents, built on the Agent Skills open standard (SKILL.md). It covers media inventory, automated timeline editing in DaVinci Resolve, quantitative review, and QC for AI-generated footage.
+
+`install.sh` installs to the Codex user-level directory. Other tools read their own skill directories (Cursor and Antigravity read `.agents/skills` inside a repository, Claude Code reads `~/.claude/skills`), so clone the repo into whichever one applies.
+
+---
 
 ## Install
-
-Run this in your terminal.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Maoxintao98/cutting-room/main/install.sh | bash
 ```
 
-The script clones the repo, checks `SKILL.md`, marks the helper scripts executable, and tells you if a dependency is missing. It installs to `~/.agents/skills/cutting-room`, which applies to every project you work in.
+The script checks for `ffprobe`, validates `SKILL.md`, marks the helper scripts executable, and installs to `~/.agents/skills/cutting-room`.
 
-Cloning it yourself works just as well.
+Or clone it yourself:
 
 ```bash
-# For yourself, in every project
+# Applies to every project
 git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-room
 
-# For one repository only
-git clone https://github.com/Maoxintao98/cutting-room <your-repo>/.agents/skills/cutting-room
+# Applies to one repository
+git clone https://github.com/Maoxintao98/cutting-room <project-path>/.agents/skills/cutting-room
 ```
 
-Invoke it as `$cutting-room`, or just say what you want, for instance "review this cut".
+Invoke it with `$cutting-room`, or just state the task: "inventory this footage", "start a rough-cut timeline in Resolve", "review this cut and list the problems by timecode".
 
-## Four things it does
+---
 
-| Mode | Your situation | What you get |
-|---|---|---|
-| Plan | You have the footage and no idea where to begin | It settles what kind of film this is, then names the technique priorities for that kind |
-| Cut | The plan exists; the timeline does not | Building the timeline in DaVinci Resolve: clips, captions, sound |
-| Review | The cut is done, you have stared at it too long, and asking a colleague feels awkward | Scores on six dimensions, every issue pinned to a timecode, and a verdict of ship, fix, or rebuild |
-| Select | Forty generated clips and no way to choose | A three-tier defect taxonomy plus a keep, fix, or discard decision tree |
+## Four modes
 
-The first step is working out what kind of film this is. A brand mood piece and a narrative short often want opposite techniques, and cutting before you know which one you are making wastes the work.
+| Mode | Trigger | Deliverable | Reference |
+| :--- | :--- | :--- | :--- |
+| **Plan** | Footage in hand, direction undecided | Film type and a single primary goal, plus technique priorities and cutting rules | [craft.md](references/craft.md) |
+| **Cut** | Plan settled, timeline needed | Project, clips, captions and audio built in DaVinci Resolve | [resolve.md](references/resolve.md) |
+| **Review** | Quality check on a cut or a rough assembly | Six-dimension scores, timecode evidence, fixes ranked by cost against benefit | [review.md](references/review.md) |
+| **Select** | Screening a large batch of generated clips | Three-tier defect taxonomy, routed by a keep / fix / discard decision tree | [clip-qc.md](references/clip-qc.md) |
 
-## The eight rules
+---
 
-Reviewing is hard for two reasons. One is not daring to say the thing. The other is saying it carelessly. These rules exist to prevent both.
+## Review rules
 
-1. **No flattery, no softening.** Openers like "overall it's solid, but..." are banned. The verdict does not change because of who made the film. Calling something a rebuild job is part of the work, not a breach of manners.
-2. **No padding.** Never invent a problem to look thorough. If nothing is wrong, say so. The reverse holds too, so do not manufacture praise for symmetry. Forced balance is its own kind of dishonesty.
-3. **Every claim carries evidence.** If you cannot point at a timecode or a shot number, do not write it. Words like *stunning* and *great energy* add nothing.
-4. **Separate fact, consensus, and taste.** A personal preference has to be marked as one. Passing taste off as a standard is the most common failure in review work.
-5. **Hold strengths and weaknesses to the same bar.** A strength must be as specific as a critique, and the review must name the single best shot in the film and explain why it works. If the film is good, say so plainly, with no "but" hanging off it.
-6. **Criticise the work, not the maker.** That is not the same as going easy on it.
-7. **"This doesn't work" arrives with a why and a suggestion.** A rejection with no path forward is not a review.
-8. **Say when you don't know.** Missing the brief, the target platform, or a hard client requirement? Name the gap instead of inventing a confident-sounding verdict.
+1. **Do not soften the verdict.** Phrases like "overall it's solid, but..." and "the flaws don't outweigh the merits" are banned. The verdict is one of three: ship, fix, rebuild.
+2. **Do not pad.** If there is no problem, say there is no problem. Never invent one to look thorough, and never manufacture praise for symmetry.
+3. **Every judgement carries a timecode.** Precise to the second, the frame, or the shot number. Words like "premium", "textured" and "well-paced" are banned because they cannot be quantified.
+4. **Separate fact, consensus and preference.** A subjective preference must be marked as such and cannot serve as a passing criterion.
+5. **One standard for strengths and weaknesses.** A strength must be as specific as a criticism, and must name the best shot in the film and the craft reason it works. Do not qualify praise with a conjunction that weakens it.
+6. **Judge the work only.** The assessment covers image, sound and structure. Never the person.
+7. **A criticism must arrive with a solution.** Name the problem and the concrete path to fixing it, or the technical substitute.
+8. **Declare information gaps.** If the brief, the target platform or a technical spec is missing, say so rather than assuming.
 
-## What a review looks like
+---
 
-Below is a fictional 25-second brand film.
+## Sample review report
 
-```
+```text
 Title/version: demo-v1    Type: brand film    Length: 25s    Aspect: 16:9
-[Missing] target platform. This affects any judgement about safe areas.
-────────────────────────────────────────────────
-1. What works
-   1. Best shot in the film, at 00:12. The push-in as the water falls
-      continues the rotation of the previous shot, the only genuine
-      motion match cut in the piece.
-   2. The 0.8s of silence at 00:06 is motivated. An action triggers it
-      and pulls attention back to the image.
-   3. Colour temperature is consistent throughout.
+[Missing] target platform, so vertical safe areas cannot be assessed
+─────────────────────────────────────────────────────────────
+1. What holds
+  1. Best shot: at 00:12 the push-in as the water falls runs in the same
+     direction as the previous shot's rotation (a motion match cut).
+  2. At 00:06, 0.8s of silence triggered by an action pulls attention
+     back to the subject.
+  3. Colour temperature and contrast ratio are consistent throughout.
 
-2. Six dimensions
-   1 Narrative progression      1/3   00:03 no causal link to what surrounds it
-   2 Sound and image            2/3   00:18 flat music level, no build to the peak
-   3 Composition and graphics   1/3   00:09 caption sits across a face
-   4 Shot-to-shot continuity    2/3   00:07 hard cut from wide to close-up
-   5 Message and brand          1/3   what is being sold is unclear
-   6 Rhythm and pacing          2/3   00:15 speed ramp runs against the next shot
+2. Six dimensions (0 clean / 1 minor / 2 clear / 3 fatal)
+  1 Narrative progression      1/3  [00:03] no causal link to either neighbour; plays the same in reverse
+  2 Sound and image            2/3  [00:18] flat music level with no build to the peak; a key action sound is missing
+  3 Composition and graphics   1/3  [00:09] caption sits across a face
+  4 Shot-to-shot continuity    2/3  [00:07] hard cut from wide to close-up with no bridging beat
+  5 Message and brand          1/3  no core product claim established
+  6 Rhythm and pacing          2/3  [00:15] speed ramp runs against the next shot's motion
 
-3. Issues, ordered by cost against benefit
-   1. [High benefit, low cost]  00:18 lift the final music section by 4dB
-   2. [High benefit, low cost]  00:03 cut the shot, the film reads clearer
-   3. [High benefit, high cost] 00:05-09 subject consistency needs a regen
+3. Issues (ranked by benefit against cost)
+  1. [High benefit, low cost]  00:18 lift 4dB before the music peak and add the action sound
+  2. [High benefit, low cost]  00:03 cut the empty shot; tighter rhythm, denser information
+  3. [High benefit, high cost] 00:05-00:09 subject deformation; regenerate with a revised prompt
 
 4. Verdict
-   [ ] ship    [x] fix (music build, cut at 00:03, regen 00:05-09)
-   In one line. Every shot works alone. Together, they do not feel like
-   one film.
+  [ ] ship    [X] fix (per the list above)    [ ] rebuild
+  Summary: each shot passes on its own; the sequence lacks connective logic.
 ```
 
-In the third block, issues are ordered by **what a fix costs against what it buys**, not by severity. A large problem that takes ten seconds is worth more of your attention than a small one that needs a reshoot.
+---
 
-## Where it comes from
+## Basis and standards
 
-A distillation of 24 books, 19 research papers, and 27 articles, roughly 12 million characters of extracted text.
+Built from 24 books on editing theory, 19 papers on generated-video quality assessment, and 27 industry technical specifications:
 
-The books run the length of the editing tradition, from montage through realism. The papers cover 2023 to 2026 work on evaluating generated video. The skill folds all of it into one method and carries no citations in its own text.
+- **Cut-point arbitration**: emotion 51% > story 23% > rhythm 10% > eye-trace 7% > two-dimensional plane 5% > three-dimensional space 4%. When they conflict, hold the top and sacrifice your way up from the bottom.
+- **AIGC defect taxonomy**:
+  - Tier 1 (surface): colour shift, flicker, local noise.
+  - Tier 2 (structural): unexpected deformation, extra limbs, clipping through occlusion.
+  - Tier 3 (temporal-semantic): irreversible physical violations, broken causality, cross-shot consistency failure.
 
-## Contents
+---
 
+## Layout
+
+```text
+cutting-room/
+├── SKILL.md                     # Skill entry point and workflow
+├── agents/openai.yaml           # Agent metadata
+├── install.sh                   # Install script
+├── references/
+│   ├── craft.md                 # Cutting grammar: film types, four questions per cut, rhythm model, transitions
+│   ├── resolve.md               # Resolve automation: API contract, common failures
+│   ├── review.md                # Review system: six-dimension rubric, three-pass method, report template
+│   └── clip-qc.md               # AIGC selection: defect taxonomy, motion assessment, keep/NG decision tree
+└── scripts/
+    ├── probe.py                 # ffprobe scan of media metadata and anomalies
+    ├── resolve_mcp.py           # DaVinci Resolve official MCP client
+    ├── run_step.py              # Step-script runner for Resolve
+    └── steps/
+        └── 00_inspect_timeline.py # Timeline integrity: gaps, overruns, empty tracks
 ```
-SKILL.md                        Main body and routing
-agents/openai.yaml              UI metadata
-references/
-  craft.md                      Plan: terminology, priorities, cut points, rhythm, sound, montage, transitions, blocking
-  resolve.md                    Cut: the Resolve tool contract, and nine pitfalls found in practice
-  review.md                     Review: the discipline, a three-pass method, the six-dimension rubric, report template
-  clip-qc.md                    Select: a three-tier defect taxonomy, per-clip record sheet
-scripts/
-  probe.py                      Inventory a media folder with ffprobe
-  resolve_mcp.py                Talk to the Resolve MCP over stdio
-  run_step.py                   Execute a step script inside Resolve
-  steps/00_inspect_timeline.py  Check a timeline before handing it over
-```
 
-Only `SKILL.md` loads on trigger. The rest is read when the task calls for it.
+---
 
-## Verified in practice
+## DaVinci Resolve notes
 
-The pipeline has been run end to end on real media, from inventorying a folder of 52 clips through creating a project, importing, building a timeline, and reading it back.
+- **Timeline start frame**: a Resolve timeline normally begins at `01:00:00:00`, which is frame 86400. Timecode conversion and frame arithmetic must use that as the origin.
+- **Project safety**: create a new timeline or save the project under a new name before bulk operations. Never overwrite the user's original project.
+- **Delivery check**: run `steps/00_inspect_timeline.py` before export to verify track continuity and catch unintended gaps.
 
-The nine pitfalls in `references/resolve.md` all came out of real sessions, including the fact that a Resolve timeline starts at frame 86400 rather than zero, which you only find by running it.
+---
 
 ## License
 
-MIT
+[MIT](LICENSE)
