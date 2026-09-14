@@ -209,3 +209,12 @@ names = list(fonts.keys())                 # 取其中确实存在的字体名�
 
 **七、每步都打印 JSON。**
 把工作拆成编号的步骤脚本，每步只做一件事，结束时输出结构化结果。Resolve 的脚本通道不稳定，一次做太多，失败时无从定位。排查用的 `probe`、`diag`、`try` 步骤会写得很多，这是正常的。
+
+**八、时间线从 01:00:00:00 起算。**
+`GetEndFrame()` 返回的是**绝对帧号**，新时间线的起点是 `86400`（也就是 1 小时），不是 0。
+算时长必须用 `GetEndFrame() - GetStartFrame()`，否则会多出整整一小时。
+`scripts/steps/00_inspect_timeline.py` 已经按这个算法处理。
+
+**九、往空时间线追加片段会自动首尾相接。**
+`AppendToTimeline` 不传 `recordFrame` 时，片段按顺序紧挨着排在第一条视频轨，
+音频自动同步到对应音频轨。要精确摆放再显式传 `recordFrame`。
