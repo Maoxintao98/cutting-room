@@ -1,6 +1,8 @@
 # 落地执行 · DaVinci Resolve
 
-判断做完之后，真正把片子剪出来。这条路走 DaVinci Resolve 21.1 自带的官方 MCP。
+判断做完之后，把时间线剪出来。这条路走 DaVinci Resolve 21.1 自带的官方 MCP。
+
+**交付物是一条编辑好的时间线，不是渲染好的文件。**渲染由用户自己跑。
 
 ## 两种接入方式
 
@@ -78,11 +80,27 @@ if tl:
 3 导入素材    MediaPool.ImportMedia
 4 建时间线    MediaPool.CreateTimelineFromClips / Timeline.AddTrack
 5 剪辑        AppendToTimeline / DeleteClips / SetClipsLinked
-6 声音        NormalizeAudioLevel / AutoAlignClips
-7 导出工程    EDL / FCPXML / DRT / OTIO
-8 渲染        RenderSettings + StartRendering
-9 自检        回看成品，走 review.md 的六维检查
+6 覆盖层      字幕、图形走 Fusion comp，单独一遍处理
+7 声音        NormalizeAudioLevel / AutoAlignClips
+8 体检        scripts/steps/00_inspect_timeline.py
+9 交接        报告时间线状态，渲染交给用户
 ```
+
+## 时间线自检
+
+**交给用户之前跑一遍体检。**这个脚本用区间合并算覆盖，只把真正没被任何片段盖住的地方算作空隙，转场压着片段不会误报。
+
+```bash
+python3 scripts/run_step.py scripts/steps/00_inspect_timeline.py
+```
+
+输出包含帧率、时长、每轨的片段数与转场数、空隙位置。判断规则有两条。
+
+**主画面轨（video 1）必须连续**，有空隙就是问题。覆写轨、字幕轨、音效轨允许有空隙，那只是没铺满，不算错。
+
+**超出时间线末尾是真问题**，任何轨道都要报。
+
+顺带会提示空的视频轨，可以删掉。
 
 ## 已核实的 API（21.1）
 
@@ -115,7 +133,7 @@ timeline = project.GetCurrentTimeline()
 | `Timeline.NormalizeAudioLevel(items, options)` | 音量归一 |
 | `Timeline.AutoAlignClips(items, options)` | 自动对齐 |
 
-**导出与渲染**
+**导出与渲染**（渲染由用户负责，这里只作备查）
 
 时间线导出类型是 `resolve.*` 常量。已验证存在的有 `EXPORT_EDL`、`EXPORT_FCPXML_1_8`、`EXPORT_FCPXML_1_9`、`EXPORT_FCPXML_1_10`、`EXPORT_AAF`、`EXPORT_DRT`、`EXPORT_OTIO`、`EXPORT_ALE`。
 

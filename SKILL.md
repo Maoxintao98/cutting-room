@@ -106,7 +106,9 @@ python3 scripts/probe.py <素材目录> --contact 6   # 附带每 6 秒抽帧的
 
 ## 四、第三步：在 Resolve 里落地
 
-方案要变成真的片子。走 DaVinci Resolve 21.1 自带的官方 MCP。
+方案要变成时间线。走 DaVinci Resolve 21.1 自带的官方 MCP。
+
+**这一站的交付物是一条编辑好的时间线，渲染不归你管。**
 
 ```bash
 python3 scripts/resolve_mcp.py status                     # Resolve 在跑吗
@@ -120,7 +122,13 @@ python3 scripts/run_step.py steps/30_titles.py --unsafe   # 需要文件系统�
 2. **不覆盖用户的工程**。开工前另存为新项目或新时间线。
 3. **大改动先报方案**。删片段、改结构、批量操作、起渲染之前，先讲清楚再动手。
 
-流程是盘点素材、建工程、导入、建时间线、剪辑、处理声音、导出工程、渲染、自检。
+流程是盘点素材、建工程、导入、建时间线、剪辑、做覆盖层、处理声音、体检。
+
+**交接前跑一次时间线体检**，它会算出每轨的片段数、转场数和真空隙。主画面轨必须连续，覆写轨和音效轨允许有空隙。
+
+```bash
+python3 scripts/run_step.py scripts/steps/00_inspect_timeline.py
+```
 
 API 清单、脚本骨架、与 ffmpeg 的分工 → [references/resolve.md](references/resolve.md)
 
