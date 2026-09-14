@@ -1,18 +1,45 @@
 # Cutting Room
 
-**A coding-agent skill for film editing.** It cuts, it reviews, and it judges whether AI-generated clips are usable.
+**English** | [中文](README.zh-CN.md)
 
-Ask a model to critique an edit and you usually get something like *"The pacing is strong, though the second act could be tighter."* Polite, unfalsifiable, useless. This skill exists to prevent that.
+> A coding-agent skill for film editing. It inventories footage, cuts a timeline in DaVinci Resolve, and reviews a cut honestly.
+> **The deliverable is an edited timeline. Rendering is not its job.**
 
----
+## Install
+
+One command for an agent or a person:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Maoxintao98/cutting-room/main/install.sh | bash
+```
+
+Or clone it yourself:
+
+```bash
+git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-room
+```
+
+Codex scans these locations automatically, so cloning is the whole install.
+
+```bash
+# User level, applies to every project
+git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-room
+
+# Project level, applies to one repository
+git clone https://github.com/Maoxintao98/cutting-room <your-repo>/.agents/skills/cutting-room
+```
+
+Invoke it as `$cutting-room`, or just describe the task ("review this cut") and the description handles matching.
 
 ## Three modes
 
 | Mode | Your situation | What you get |
 |---|---|---|
-| **Review** | The cut is done, you have stared at it too long, and asking a colleague feels awkward | Scores on six dimensions, every issue pinned to a timecode, and a verdict of ship, fix, or rebuild |
 | **Cut** | You have the footage and no idea where to begin | An intake that settles the film's type and goal first, then the technique priorities for that type |
-| **Select** | Forty generated clips and no way to choose | Two independent labels (generation defects / editing usability) and a keep / fix / discard decision tree |
+| **Execute** | The plan exists; the timeline does not | Real edits in DaVinci Resolve through its official MCP |
+| **Review** | The cut is done, you have stared at it too long, and asking a colleague feels awkward | Scores on six dimensions, every issue pinned to a timecode, and a verdict: ship / fix / rebuild |
+
+It also judges whether individual AI-generated clips are usable, with a three-tier defect taxonomy.
 
 ## The eight rules
 
@@ -68,54 +95,28 @@ A distillation of **24 books, 19 research papers, and 27 articles**, roughly 12 
 
 The books run the length of the editing tradition, from montage through realism. The papers cover 2023 to 2026 work on evaluating generated video. The skill folds all of it into one method and carries no citations in its own text.
 
-## Install
-
-Codex scans these locations automatically. Cloning is the whole install.
-
-```bash
-# User level, applies to every project
-git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-room
-
-# Project level, applies to one repository
-git clone https://github.com/Maoxintao98/cutting-room <your-repo>/.agents/skills/cutting-room
-```
-
-Invoke it as `$cutting-room`, or just describe the task ("review this cut") and the description handles matching.
-
 ## Contents
 
 ```
-SKILL.md               Main body and routing
-agents/openai.yaml     UI metadata
+SKILL.md                        Main body and routing
+agents/openai.yaml              UI metadata
 references/
-  craft.md             Cutting: terminology, priorities, cut points, rhythm, sound, montage, transitions, blocking
-  review.md            Reviewing: the discipline, a three-pass method, the six-dimension rubric, report template
-  clip-qc.md           Selecting: a three-tier defect taxonomy, per-clip record sheet
+  craft.md                      Cutting: terminology, priorities, cut points, rhythm, sound, montage, transitions, blocking
+  resolve.md                    Executing: the DaVinci Resolve MCP, its tool contract, and nine pitfalls found in practice
+  review.md                     Reviewing: the discipline, a three-pass method, the six-dimension rubric, report template
+  clip-qc.md                    Selecting: a three-tier defect taxonomy, per-clip record sheet
+scripts/
+  probe.py                      Inventory a media folder with ffprobe
+  resolve_mcp.py                Talk to the Resolve MCP over stdio
+  run_step.py                   Execute a step script inside Resolve
+  steps/00_inspect_timeline.py  Check a timeline before handing it over
 ```
 
 Only `SKILL.md` loads on trigger. Reviewing will not pull in the clip-selection reference.
 
----
+## Verified in practice
 
-## 中文
-
-给编码 agent 用的剪辑 skill，能做三件事。剪片子、审片子，挑 AI 生成的素材。
-
-| 用法 | 场景 | 产出 |
-|---|---|---|
-| **评** | 片子剪完了，自己看花了眼，找人评又怕对方客气 | 六维评分、时间码证据、问题清单，以及能用／需修／重做的结论 |
-| **剪** | 素材在手，不知道从哪下手 | 先问清片种与目标，再给这个片种的技法侧重 |
-| **选** | AIGC 生成了几十条片段，挑到麻木 | 生成瑕疵与剪辑可用性两级标签，以及 KEEP／可修／NG 决策树 |
-
-审片难在两处，一是不敢说，二是乱说。八条规矩防的就是这两件事。
-
-不奉承，不软化。不因为片子是谁做的，就改口径。不为了显得专业而编造问题，也不为了格式对称硬找优点。每条判断都要指得出时间码。个人口味必须标明是口味。优点和缺点用同一把尺，还得指出全片最好的那个镜头，说明它好在哪。说"不行"的时候，要给出为什么和怎么改。
-
-缺 Brief、缺平台、缺硬性要求，就直接讲。别编。
-
-底本是一个 24 本书、19 篇论文、27 篇文章的资料库，抽取全文约一千二百万字符，覆盖从蒙太奇到写实主义的剪辑主线，以及近三年评估生成视频的研究。skill 把这些整理成一套统一方法，正文不带引用。
-
-安装和调用方式见英文部分。
+The pipeline has been run end to end on real media: inventory a folder of 52 clips, create a project, import, build a timeline, and read it back. The pitfalls documented in `references/resolve.md` were not guessed; each one cost time in a real session.
 
 ## License
 
