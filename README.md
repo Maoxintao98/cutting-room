@@ -2,21 +2,19 @@
 
 **English** | [中文](README.zh-CN.md)
 
-A coding-agent skill for film editing. It does three things. It inventories your footage, cuts a timeline in DaVinci Resolve, and then grades its own work against a standard that does not let it be polite.
-
-What it hands back is an edited timeline. Rendering is not its job.
+A coding-agent skill for film editing. It does three things. It inventories your footage, cuts a timeline in DaVinci Resolve, and then grades its own work against a fixed standard before handing it over.
 
 ## Install
 
-There is nothing to build. Clone it somewhere Codex already looks and you are done. If you would rather not think about paths, one command handles it.
+Run this in your terminal.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Maoxintao98/cutting-room/main/install.sh | bash
 ```
 
-The script clones the repo, checks that `SKILL.md` is intact, marks the helper scripts executable, and tells you if ffmpeg is missing. It installs to `~/.agents/skills/cutting-room`, which applies to every project you work in.
+The script clones the repo, checks `SKILL.md`, marks the helper scripts executable, and tells you if a dependency is missing. It installs to `~/.agents/skills/cutting-room`, which applies to every project you work in.
 
-Doing it by hand works just as well.
+Cloning it yourself works just as well.
 
 ```bash
 # For yourself, in every project
@@ -26,18 +24,18 @@ git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-r
 git clone https://github.com/Maoxintao98/cutting-room <your-repo>/.agents/skills/cutting-room
 ```
 
-Nothing needs restarting. Invoke it as `$cutting-room`, or skip the command and just say what you want. Tell it "review this cut" and it picks itself up.
+Invoke it as `$cutting-room`, or just say what you want, for instance "review this cut".
 
 ## Four things it does
 
 | Mode | Your situation | What you get |
 |---|---|---|
-| Cut | You have the footage and no idea where to begin | It settles what kind of film this is first, then names the technique priorities for that kind |
-| Execute | The plan exists; the timeline does not | Real edits in DaVinci Resolve, through its official MCP |
+| Plan | You have the footage and no idea where to begin | It settles what kind of film this is, then names the technique priorities for that kind |
+| Cut | The plan exists; the timeline does not | Building the timeline in DaVinci Resolve: clips, captions, sound |
 | Review | The cut is done, you have stared at it too long, and asking a colleague feels awkward | Scores on six dimensions, every issue pinned to a timecode, and a verdict of ship, fix, or rebuild |
 | Select | Forty generated clips and no way to choose | A three-tier defect taxonomy plus a keep, fix, or discard decision tree |
 
-The first row deserves a note. Before it cuts anything, it works out what kind of film this is. A brand mood piece and a narrative short often want opposite techniques, and cutting before you know which one you are making wastes the work.
+The first step is working out what kind of film this is. A brand mood piece and a narrative short often want opposite techniques, and cutting before you know which one you are making wastes the work.
 
 ## The eight rules
 
@@ -87,7 +85,7 @@ Title/version: demo-v1    Type: brand film    Length: 25s    Aspect: 16:9
    one film.
 ```
 
-Look at the third block. Issues are ordered by **what a fix costs against what it buys, not by severity**. A large problem that takes ten seconds is worth more of your attention than a small one that needs a reshoot.
+In the third block, issues are ordered by **what a fix costs against what it buys**, not by severity. A large problem that takes ten seconds is worth more of your attention than a small one that needs a reshoot.
 
 ## Where it comes from
 
@@ -101,10 +99,10 @@ The books run the length of the editing tradition, from montage through realism.
 SKILL.md                        Main body and routing
 agents/openai.yaml              UI metadata
 references/
-  craft.md                      Cutting: terminology, priorities, cut points, rhythm, sound, montage, transitions, blocking
-  resolve.md                    Executing: the Resolve MCP, its tool contract, and nine pitfalls found in practice
-  review.md                     Reviewing: the discipline, a three-pass method, the six-dimension rubric, report template
-  clip-qc.md                    Selecting: a three-tier defect taxonomy, per-clip record sheet
+  craft.md                      Plan: terminology, priorities, cut points, rhythm, sound, montage, transitions, blocking
+  resolve.md                    Cut: the Resolve tool contract, and nine pitfalls found in practice
+  review.md                     Review: the discipline, a three-pass method, the six-dimension rubric, report template
+  clip-qc.md                    Select: a three-tier defect taxonomy, per-clip record sheet
 scripts/
   probe.py                      Inventory a media folder with ffprobe
   resolve_mcp.py                Talk to the Resolve MCP over stdio
@@ -112,13 +110,13 @@ scripts/
   steps/00_inspect_timeline.py  Check a timeline before handing it over
 ```
 
-Only `SKILL.md` loads on trigger. The rest is read when the task calls for it. Reviewing will not pull in the clip-selection reference.
+Only `SKILL.md` loads on trigger. The rest is read when the task calls for it.
 
 ## Verified in practice
 
 The pipeline has been run end to end on real media, from inventorying a folder of 52 clips through creating a project, importing, building a timeline, and reading it back.
 
-The nine pitfalls in `references/resolve.md` were not guessed. Each one cost time in a real session, including the fact that a Resolve timeline starts at frame 86400 rather than zero, which you only discover by running it.
+The nine pitfalls in `references/resolve.md` all came out of real sessions, including the fact that a Resolve timeline starts at frame 86400 rather than zero, which you only find by running it.
 
 ## License
 

@@ -2,21 +2,19 @@
 
 [English](README.md) | **中文**
 
-这是一个给编码 agent 用的剪辑 skill。它做三件事。把一堆素材盘清楚，在 DaVinci Resolve 里把时间线剪出来，然后在交活之前，用一套不客气的标准把自己评一遍。
-
-它交出去的是一条编辑好的时间线。渲染不归它管。
+这是一个给编码 agent 用的剪辑 skill。它做三件事。把素材盘清楚，在达芬奇里把时间线剪出来，交活之前按一套固定的标准把自己评一遍。
 
 ## 安装
 
-不用构建，克隆到 Codex 会扫描的目录就行。想省事，一条命令。
+在终端里跑这条命令。
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Maoxintao98/cutting-room/main/install.sh | bash
 ```
 
-脚本会克隆仓库、核对 SKILL.md 是否完整、给脚本加上执行权限，最后告诉你还缺什么依赖。它默认装到 `~/.agents/skills/cutting-room`，这个位置对你在任何项目里都生效。
+脚本会克隆仓库、检查 SKILL.md、给脚本加上执行权限，并提示缺哪个依赖。它默认装到 `~/.agents/skills/cutting-room`，对你在任何项目里都生效。
 
-想自己来也可以。
+也可以自己克隆。
 
 ```bash
 # 装给自己，所有项目都能用
@@ -26,18 +24,18 @@ git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-r
 git clone https://github.com/Maoxintao98/cutting-room <你的仓库>/.agents/skills/cutting-room
 ```
 
-装完就能用，不用重启。调用的时候写 `$cutting-room`。嫌命令记不住也无所谓，直接说要干什么就行，比如跟它讲"审一下这条片子"，它自己会对上。
+调用时写 `$cutting-room`，也可以直接说要干什么，比如"审一下这条片子"。
 
 ## 四种用法
 
 | 用法 | 你的处境 | 它给你什么 |
 |---|---|---|
-| 剪 | 素材在手，不知道从哪下手 | 先把片种和目标问清楚，再给这个片种的技法侧重 |
-| 执行 | 方案有了，时间线还没有 | 通过官方 MCP 在 Resolve 里动真格 |
-| 评 | 片子剪完了，自己看花了眼，找人评又怕对方客气 | 六维评分、时间码证据，还有能用／需修／重做的结论 |
-| 选 | AIGC 生成了几十条，挑到麻木 | 瑕疵三级分类，加上 KEEP／可修／NG 的决策树 |
+| 定方案 | 素材在手，不知道从哪下手 | 先把片种和目标问清楚，再给这个片种的技法侧重 |
+| 剪辑 | 方案有了，时间线还没有 | 在达芬奇里建时间线、铺片段、加字幕、调声音 |
+| 审片 | 片子剪完了，自己看花了眼，找人评又怕对方客气 | 六维评分、时间码证据，还有能用／需修／重做的结论 |
+| 选片 | AIGC 生成了几十条，挑到麻木 | 瑕疵三级分类，加上 KEEP／可修／NG 的决策树 |
 
-第一行那个"剪"值得多说一句。它要求的第一步是**先问清楚剪的是什么片子**。品牌氛围片和叙事短片要的技法经常是相反的，不问就上手，多半白干。
+第一件事要问清楚剪的是什么片子。品牌氛围片和叙事短片要的技法经常是相反的，不问就上手，多半白干。
 
 ## 八条底线
 
@@ -91,7 +89,7 @@ git clone https://github.com/Maoxintao98/cutting-room <你的仓库>/.agents/ski
   一句话总评：单看每个镜头都成立，合起来不像同一支片子。
 ```
 
-注意第三块。问题清单**按改动成本和收益的比值排序，不按严重程度排**。一个十秒钟能改好的大问题，价值远高于一个要重拍的小问题。
+第三块里，问题清单按**改动成本和收益的比值**排序，不按严重程度排。一个十秒钟能改好的大问题，价值远高于一个要重拍的小问题。
 
 ## 底本
 
@@ -105,24 +103,24 @@ git clone https://github.com/Maoxintao98/cutting-room <你的仓库>/.agents/ski
 SKILL.md                        主干与路由
 agents/openai.yaml              UI 元数据
 references/
-  craft.md                      剪：术语、优先级、剪接点、节奏、声音、蒙太奇、转场、机位
-  resolve.md                    执行：Resolve MCP 的工具契约，以及九条实战坑位
-  review.md                     评：客观性纪律、三遍看法、六维评分卡、报告模板
-  clip-qc.md                    选：瑕疵三级分类、选片记录表
+  craft.md                      定方案：术语、优先级、剪接点、节奏、声音、蒙太奇、转场、机位
+  resolve.md                    剪辑：达芬奇的工具契约，以及九条实战坑位
+  review.md                     审片：客观性纪律、三遍看法、六维评分卡、报告模板
+  clip-qc.md                    选片：瑕疵三级分类、选片记录表
 scripts/
   probe.py                      用 ffprobe 盘点素材目录
-  resolve_mcp.py                直连 Resolve MCP
-  run_step.py                   在 Resolve 里执行步骤脚本
+  resolve_mcp.py                直连达芬奇的 MCP
+  run_step.py                   在达芬奇里执行步骤脚本
   steps/00_inspect_timeline.py  交接前体检时间线
 ```
 
-触发的时候只加载 `SKILL.md`，其余按需读。审片不会去加载选片那一份。
+触发时只加载 `SKILL.md`，其余按需读。
 
 ## 实践验证
 
 这条流水线在真实素材上完整跑过，一路从盘点 52 个片段的目录，到建工程、导入、建时间线，再读回来核对。
 
-`references/resolve.md` 里那九条坑不是猜的。每一条都在真实操作里付过代价，包括时间线从第 86400 帧起算这种只有跑一次才会撞上的事。
+`references/resolve.md` 里那九条坑都是实操撞出来的，包括时间线从第 86400 帧起算这种不跑一次不会知道的事。
 
 ## License
 
