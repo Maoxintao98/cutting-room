@@ -1,159 +1,121 @@
-# Cutting Room · 剪辑室
+# Cutting Room
 
-> 给编码 agent 用的**剪辑 skill**：剪片子、审片子、挑 AI 生成的素材。
-> 它最不一样的地方不是"会剪"，而是**敢说实话**。
+**A coding-agent skill for film editing.** It cuts, it reviews, and it judges whether AI-generated clips are usable.
+
+Ask a model to critique an edit and you usually get something like *"The pacing is strong, though the second act could be tighter."* Polite, unfalsifiable, useless. This skill exists to prevent that.
 
 ---
 
-## 它解决什么问题
+## Three modes
 
-三个场景，对应三种用法：
-
-| 用法 | 你现在的处境 | 它给你什么 |
+| Mode | Your situation | What you get |
 |---|---|---|
-| **评** | 片子剪完了，自己看花了眼；找人评又怕对方客气 | 六维评分 + **时间码证据** + 问题清单 + 能用／需修／重做的结论 |
-| **剪** | 面对一堆素材，知道要剪，但不知道从哪下手、在哪切 | 先问清片种与目标，再按片种给出技法侧重 |
-| **选** | AIGC 生成了几十条片段，挑到麻木 | 两级标签（生成瑕疵／剪辑可用性）+ KEEP／可修／NG 决策树 |
+| **Review** | The cut is done, you have stared at it too long, and asking a colleague feels awkward | Scores on six dimensions, every issue pinned to a timecode, and a verdict of ship, fix, or rebuild |
+| **Cut** | You have the footage and no idea where to begin | An intake that settles the film's type and goal first, then the technique priorities for that type |
+| **Select** | Forty generated clips and no way to choose | Two independent labels (generation defects / editing usability) and a keep / fix / discard decision tree |
 
----
+## The eight rules
 
-## 核心立场：八条底线
+Reviewing is hard for two reasons. One is not daring to say the thing. The other is saying it carelessly. The rules below exist to prevent both.
 
-审片最大的敌人不是"看不出问题"，而是**不敢说**和**乱说**。所以这套规矩直接写进了主干：
+1. **No flattery, no softening.** Openers like "overall it's solid, but..." are banned. The verdict does not change because of who made the film. Calling something a rebuild job is part of the work, not a breach of manners.
+2. **No padding.** Never invent a problem to look thorough. If nothing is wrong, say so. The reverse holds too, so do not manufacture praise for symmetry. Forced balance is its own kind of dishonesty.
+3. **Every claim carries evidence.** If you cannot point at a timecode or a shot number, do not write it. Words like *stunning* and *great energy* add nothing.
+4. **Separate fact, consensus, and taste.** A personal preference has to be marked as one. Passing taste off as a standard is the most common failure in review work.
+5. **Hold strengths and weaknesses to the same bar.** A strength must be as specific as a critique, and the review must name the single best shot in the film and explain why it works. If the film is good, say so plainly, with no "but" hanging off it.
+6. **Criticise the work, not the maker.** That is not the same as going easy on it.
+7. **"This doesn't work" arrives with a why and a suggestion.** A rejection with no path forward is not a review.
+8. **Say when you don't know.** Missing the brief, the target platform, or a hard client requirement? Name the gap instead of inventing a confident-sounding verdict.
 
-**1. 不奉承，不软化**
-禁用「整体不错，但是……」「瑕不掩瑜」「提点小建议」。
-不因人情、关系、作者是谁而软化结论。**得罪人是这份工作的成本，不是失误。**
-
-**2. 不凑数**
-不为显得专业而编造问题——没问题就说没问题。
-反过来同样：**不为格式对称而硬找优点**。强行平衡本身就是不诚实。
-
-**3. 每条判断都要有证据**
-指得出时间码／镜头号的才写。禁用语：震撼、高级、有质感、节奏不错——无证据的形容词只是噪音。
-
-**4. 区分事实／共识／偏好**
-把个人偏好伪装成标准，是审片最常见的失职。偏好必须标明【偏好】。
-
-**5. 优点和缺点用同一把尺**
-优点必须和缺点一样具体；**必须指出全片最好的那一个镜头，并说明为什么好**。
-片子好就明确说好，不要用"但是"给它打折。
-
-**6. 评价作品，不评价人**
-但"不评人 ≠ 放水"。
-
-**7. 说"不行"必须附上"为什么"和"怎么改"**
-只否定不给路，等于没评。
-
-**8. 不确定就说不确定**
-缺什么信息（Brief／平台／硬性要求）直接讲，别编一个"听起来很专业"的结论。
-
----
-
-## 它给的报告长什么样
-
-（示例，内容为虚构）
+## What a review looks like
 
 ```
-片名/版本：demo-v1        片种：品牌氛围片      时长：25s      画幅：16:9
-【信息缺口】未提供投放平台，可能影响对竖屏安全区的判断
+Title/version: demo-v1    Type: brand film    Length: 25s    Aspect: 16:9
+[Missing] target platform. This affects any judgement about safe areas.
 ────────────────────────────────────────────────
-一、先说成立的
-  1. 全片最好的镜头：第 12 秒，水滴落下时镜头向前推——
-     运动方向与前一镜的旋转同向，是全片唯一一处真正接上的动势匹配剪
-  2. 第 6 秒的 0.8 秒留白有动机：由动作触发，把注意力压回画面
-  3. 色温全片统一；七次景别切换中六次保持了 ≥ 一档的变化
+1. What works
+   1. Best shot in the film, at 00:12. The push-in as the water falls
+      continues the rotation of the previous shot, the only genuine
+      motion match cut in the piece.
+   2. The 0.8s of silence at 00:06 is motivated. An action triggers it
+      and pulls attention back to the image.
+   3. Colour temperature is consistent throughout.
 
-二、六维评分
-  1 叙事推进            1/3   第 3 秒：该镜头与前后无因果关系，可删
-  2 视听协同与声音设计  2/3   第 18 秒：音乐全程同一电平，高潮前无推进
-  3 视觉构成与图文      1/3   第 9 秒：字幕压在人物面部
-  4 镜头间连续性        2/3   第 7 秒：全景硬切特写，无过渡支点
-  5 信息与品牌一致性    1/3   看完无法确定在卖什么
-  6 时间节奏与速度      2/3   第 15 秒：变速方向与下一镜动势相反
+2. Six dimensions
+   1 Narrative progression      1/3   00:03 no causal link to what surrounds it
+   2 Sound and image            2/3   00:18 flat music level, no build to the peak
+   3 Composition and graphics   1/3   00:09 caption sits across a face
+   4 Shot-to-shot continuity    2/3   00:07 hard cut from wide to close-up
+   5 Message and brand          1/3   what is being sold is unclear
+   6 Rhythm and pacing          2/3   00:15 speed ramp runs against the next shot
 
-三、问题清单（按"改动成本／收益比"排序）
-  1.【高收益·低成本】第 18 秒 音乐缺推进 → 末段抬 4dB
-  2.【高收益·低成本】第 3 秒 删掉该镜头 → 全片信息更清晰
-  3.【高收益·高成本】第 5–9 秒 主体一致性有问题 → 需重新生成
+3. Issues, ordered by cost/benefit rather than severity
+   1. [High benefit, low cost]  00:18 lift the final music section by 4dB
+   2. [High benefit, low cost]  00:03 cut the shot, the film reads clearer
+   3. [High benefit, high cost] 00:05-09 subject consistency needs a regen
 
-四、结论
-  ☐ 能用    ☑ 需修（改：音乐推进、第 3 秒删镜、第 5–9 秒重生成）
-  一句话总评：单看每个镜头都成立，合起来不像同一支片子。
+4. Verdict
+   [ ] ship    [x] fix (music build, cut at 00:03, regen 00:05-09)
+   In one line. Every shot works alone. Together, they do not feel like
+   one film.
 ```
 
-注意问题清单**按"改动成本／收益比"排序，不按严重程度**——一个 10 秒钟能改好的大问题，价值远高于一个要重拍的小问题。
+Issues are ordered by **cost against benefit, not severity**. A large problem that takes ten seconds to fix is worth more attention than a small one that needs a reshoot.
 
----
+## Where it comes from
 
-## 为什么不是"让通用模型随便点评一下"
+A distillation of **24 books, 19 research papers, and 27 articles**, roughly 12 million characters of extracted text.
 
-通用模型的影评有五个通病，这个 skill 把每一条都做成了禁令：
+The books run the length of the editing tradition, from montage through realism. The papers cover 2023 to 2026 work on evaluating generated video. The skill folds all of it into one method and carries no citations in its own text.
 
-| 通病 | 对应禁令 |
-|---|---|
-| 上来先说"整体不错，但是……" | 底线 1 |
-| 只讲观感，不指时间码 | 底线 3 |
-| 把自己的口味当成标准 | 底线 4 |
-| 只挑刺，看不见好的；或反过来硬夸 | 底线 2、5 |
-| 指出问题却不给改法 | 底线 7 |
+## Install
 
----
-
-## 文件结构
-
-```
-SKILL.md               主干与路由（三种用法、八条底线、核心判断）
-agents/openai.yaml     UI 元数据（显示名「剪辑室」）
-references/
-  craft.md             剪：术语表、六法则与六戒律、剪接点体系、节奏、声音、蒙太奇、转场、机位、拉片表
-  review.md            评：客观性纪律、三遍看法流程、六维评分卡、审片报告模板、结论判定
-  clip-qc.md           选：瑕疵三级／30 类分类、选片记录表、闭环工作法
-```
-
-按需加载：触发时只读 `SKILL.md`；审片不会去加载选片那份。
-
----
-
-## 安装
-
-Codex 会自动扫描以下位置，**放进去即生效，无需构建**：
+Codex scans these locations automatically. Cloning is the whole install.
 
 ```bash
-# 用户级：对你所有项目生效
+# User level, applies to every project
 git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-room
 
-# 项目级：只对某个仓库生效
-git clone https://github.com/Maoxintao98/cutting-room <你的仓库>/.agents/skills/cutting-room
+# Project level, applies to one repository
+git clone https://github.com/Maoxintao98/cutting-room <your-repo>/.agents/skills/cutting-room
 ```
 
-调用方式：
+Invoke it as `$cutting-room`, or just describe the task ("review this cut") and the description handles matching.
 
-- **显式**：`$cutting-room`
-- **自然语言**：直接说人话（"审一下这条片子""哪些生成的镜头能用"），由 description 自动匹配
+## Contents
 
----
+```
+SKILL.md               Main body and routing
+agents/openai.yaml     UI metadata
+references/
+  craft.md             Cutting: terminology, priorities, cut points, rhythm, sound, montage, transitions, blocking
+  review.md            Reviewing: the discipline, a three-pass method, the six-dimension rubric, report template
+  clip-qc.md           Selecting: a three-tier defect taxonomy, per-clip record sheet
+```
 
-## English
-
-A coding-agent skill for film editing, in three modes:
-
-- **Cut** — where and why to cut, rhythm and sound design.
-- **Review** — an honest, evidence-based critique of a finished cut: six-dimension scoring, issues with timecode evidence, and a ship / fix / rebuild verdict.
-- **Select** — judging whether AI-generated clips are usable (KEEP / fix / NG), with a three-tier artifact taxonomy.
-
-Its distinguishing feature is a stance, not a technique: **no flattery, no padding, every claim backed by a timecode** — plus the rule that strengths must be argued as concretely as weaknesses.
-
-Install: `git clone https://github.com/Maoxintao98/cutting-room ~/.agents/skills/cutting-room`, then invoke with `$cutting-room`.
-
-Primary language is Chinese; the trigger phrases in `description` are bilingual.
+Only `SKILL.md` loads on trigger. Reviewing will not pull in the clip-selection reference.
 
 ---
 
-## 边界说明
+## 中文
 
-- 内容蒸馏自剪辑经典著作与近期 AIGC 视频评估研究，**所有署名与出处已在 skill 内剥离**。
-- 报告模板里的例子为虚构演示，不含任何真实客户或项目信息。
+给编码 agent 用的剪辑 skill，能做三件事。剪片子、审片子，挑 AI 生成的素材。
+
+| 用法 | 场景 | 产出 |
+|---|---|---|
+| **评** | 片子剪完了，自己看花了眼，找人评又怕对方客气 | 六维评分、时间码证据、问题清单，以及能用／需修／重做的结论 |
+| **剪** | 素材在手，不知道从哪下手 | 先问清片种与目标，再给这个片种的技法侧重 |
+| **选** | AIGC 生成了几十条片段，挑到麻木 | 生成瑕疵与剪辑可用性两级标签，以及 KEEP／可修／NG 决策树 |
+
+审片难在两处，一是不敢说，二是乱说。八条规矩防的就是这两件事。
+
+不奉承，不软化。不因为片子是谁做的，就改口径。不为了显得专业而编造问题，也不为了格式对称硬找优点。每条判断都要指得出时间码。个人口味必须标明是口味。优点和缺点用同一把尺，还得指出全片最好的那个镜头，说明它好在哪。说"不行"的时候，要给出为什么和怎么改。
+
+缺 Brief、缺平台、缺硬性要求，就直接讲。别编。
+
+底本是一个 24 本书、19 篇论文、27 篇文章的资料库，抽取全文约一千二百万字符，覆盖从蒙太奇到写实主义的剪辑主线，以及近三年评估生成视频的研究。skill 把这些整理成一套统一方法，正文不带引用。
+
+安装和调用方式见英文部分。
 
 ## License
 
