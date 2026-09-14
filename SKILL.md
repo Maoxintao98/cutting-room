@@ -109,9 +109,9 @@ python3 scripts/probe.py <素材目录> --contact 6   # 附带每 6 秒抽帧的
 方案要变成真的片子。走 DaVinci Resolve 21.1 自带的官方 MCP。
 
 ```bash
-python3 scripts/resolve_mcp.py status      # Resolve 在跑吗
-python3 scripts/resolve_mcp.py search Timeline
-python3 scripts/resolve_mcp.py run cut.py
+python3 scripts/resolve_mcp.py status                     # Resolve 在跑吗
+python3 scripts/run_step.py steps/10_picture.py           # 跑一个步骤脚本
+python3 scripts/run_step.py steps/30_titles.py --unsafe   # 需要文件系统时
 ```
 
 **三条铁律**

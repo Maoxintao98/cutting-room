@@ -13,8 +13,13 @@
     python3 resolve_mcp.py run cut.py            执行一个脚本文件（沙箱 Python，可访问 Resolve API）
     python3 resolve_mcp.py raw <tool> '<json>'   调用任意工具，参数为 JSON
 
-注意：run 用的是沙箱模式，只能访问 Resolve API。需要读写文件或调用子进程时，
-改用 `raw run_script_unsafe '{"code": "..."}'`，并自行确认风险。
+脚本约定（工具本身的规定，写脚本时必须遵守）
+  - 参数名是 script，不是 code
+  - 沙箱预注入 resolve 和 project 两个变量，直接可用
+  - 用 result 变量返回结构化数据，print 的输出也会被一并捕获
+  - timeout 默认 10 秒，上限 60 秒
+  - 沙箱屏蔽 os、sys、pathlib、shutil；需要文件系统或子进程时改用
+    run_script_unsafe（把 script 参数换成脚本正文即可）
 """
 
 from __future__ import annotations
@@ -110,11 +115,11 @@ def main(argv: list[str]) -> int:
             if not rest:
                 return print("用法：run <脚本.py>") or 1
             code = Path(rest[0]).read_text()
-            print(c.call("run_script", {"code": code}, timeout=300))
+            print(c.call("run_script", {"script": code}, timeout=120))
         elif cmd == "raw":
             if len(rest) < 2:
                 return print("用法：raw <tool> '<json>'") or 1
-            print(c.call(rest[0], json.loads(rest[1]), timeout=300))
+            print(c.call(rest[0], json.loads(rest[1]), timeout=120))
         else:
             print(__doc__)
             return 1

@@ -5,7 +5,7 @@
 ## 两种接入方式
 
 **A. MCP 工具可用时（首选）**
-Codex 把 `davinci_resolve` 挂成 MCP 工具后，直接调用即可。工具清单：
+Codex 把 `davinci_resolve` 挂成 MCP 工具后，直接调用即可。可用工具如下。
 
 | 工具 | 用途 |
 |---|---|
@@ -24,6 +24,42 @@ Codex 把 `davinci_resolve` 挂成 MCP 工具后，直接调用即可。工具�
 python3 scripts/resolve_mcp.py status              # Resolve 在跑吗
 python3 scripts/resolve_mcp.py search Timeline     # 查 API
 python3 scripts/resolve_mcp.py run cut.py          # 执行脚本
+```
+
+## 工具契约（写脚本前必读）
+
+`run_script` 和 `run_script_unsafe` 有几条硬规定，写错任何一条都会得到一个
+"script completed with no output or result"，而且不报错。
+
+| 规定 | 说明 |
+|---|---|
+| 参数名是 `script` | 不是 `code`。写错参数名不会报错，只会静默无输出 |
+| 预注入变量 | `resolve` 和 `project` 直接可用，不需要自己取 |
+| 返回数据 | 把结构化结果赋给 `result` 变量。`print()` 的输出也会被捕获 |
+| 超时 | 默认 10 秒，**上限 60 秒**。长任务要拆成多步 |
+| 沙箱限制 | `run_script` 屏蔽 `os`、`sys`、`pathlib`、`shutil` |
+
+需要文件系统或子进程时用 `run_script_unsafe`，其余情况一律用 `run_script`。
+
+**步骤脚本配套三个脚本**，都在 `scripts/` 下。
+
+```bash
+python3 scripts/resolve_mcp.py status          # Resolve 在跑吗
+python3 scripts/run_step.py steps/10_picture.py            # 沙箱执行
+python3 scripts/run_step.py steps/30_titles.py --unsafe    # 放开文件系统
+python3 scripts/run_step.py steps/30_titles.py --pre lib/titles.py lib/common.py
+```
+
+`run_step.py` 的 `--pre` 解决沙箱不能 import 的问题，把共享代码拼进脚本文本再投递。
+
+步骤脚本的写法是每步只做一件事，并以 `result` 返回。
+
+```python
+result = {"project": project.GetName()}
+tl = project.GetCurrentTimeline()
+if tl:
+    result["timeline"] = tl.GetName()
+    result["end_frame"] = tl.GetEndFrame()
 ```
 
 ## 三条铁律
@@ -81,39 +117,40 @@ timeline = project.GetCurrentTimeline()
 
 **导出与渲染**
 
-时间线导出类型是 `resolve.*` 常量，已验证存在的有：
-`EXPORT_EDL`、`EXPORT_FCPXML_1_8`、`EXPORT_FCPXML_1_9`、`EXPORT_FCPXML_1_10`、`EXPORT_AAF`、`EXPORT_DRT`、`EXPORT_OTIO`、`EXPORT_ALE`。
+时间线导出类型是 `resolve.*` 常量。已验证存在的有 `EXPORT_EDL`、`EXPORT_FCPXML_1_8`、`EXPORT_FCPXML_1_9`、`EXPORT_FCPXML_1_10`、`EXPORT_AAF`、`EXPORT_DRT`、`EXPORT_OTIO`、`EXPORT_ALE`。
 
-渲染相关：`Project.StartRendering(jobIds)`、`Project.IsRenderingInProgress()`、`Project.GetRenderJobList()`，渲染设置里有 `ExportVideo`、`ExportAudio`、`ExportAlpha`、`ExportSubtitle`。
+渲染相关的有 `Project.StartRendering(jobIds)`、`Project.IsRenderingInProgress()`、`Project.GetRenderJobList()`，渲染设置里有 `ExportVideo`、`ExportAudio`、`ExportAlpha`、`ExportSubtitle`。
 
 导出与渲染的具体方法名随版本变化，**动手前用 `search_scripting_api` 查一次**。
 
 ## 脚本骨架
 
+沙箱里 `resolve` 和 `project` 已经注入好了，不要再自己取，也不要 import。
+
 ```python
-# cut.py，用 scripts/resolve_mcp.py run cut.py 执行
-import DaVinciResolveScript as dvr
+# steps/10_picture.py
+# 用 python3 scripts/run_step.py steps/10_picture.py 执行
+result = {}
 
-resolve = dvr.scriptapp("Resolve")
-pm = resolve.GetProjectManager()
-project = pm.GetCurrentProject()
 pool = project.GetMediaPool()
-
-# 导入
 items = pool.ImportMedia(["/path/to/素材目录"])
+result["imported"] = len(items)
 
-# 新建时间线并把素材铺上去
-timeline = pool.CreateTimelineFromClips("cut_v1", [{"mediaPoolItem": i} for i in items])
+timeline = pool.CreateTimelineFromClips(
+    "cut_v1", [{"mediaPoolItem": i} for i in items]
+)
 project.SetCurrentTimeline(timeline)
-
-print("时间线就绪:", timeline.GetName())
+result["timeline"] = timeline.GetName()
+result["end_frame"] = timeline.GetEndFrame()
 ```
 
-沙箱里的 `run_script` 只能碰 Resolve API。需要读脚本文件、写日志或调 ffmpeg 时改用 `run_script_unsafe`。
+约定三条。只做一件事，用 `result` 返回，失败时不抛异常而是把错误写进 `result`。
+
+需要读脚本文件、写日志或调 ffmpeg 时用 `run_script_unsafe`，并把步骤脚本里要用的共享代码用 `--pre` 拼进来。
 
 ## 与 ffmpeg 的分工
 
-Resolve 负责工程级的剪辑、调色、声音和交付。ffmpeg 负责它不擅长的部分：
+Resolve 负责工程级的剪辑、调色、声音和交付。ffmpeg 负责它不擅长的部分。
 
 - 素材盘点（`scripts/probe.py`）
 - 抽帧看内容，生成 contact sheet
@@ -121,3 +158,36 @@ Resolve 负责工程级的剪辑、调色、声音和交付。ffmpeg 负责它�
 - 渲染后的成品校验，例如核对时长、音轨、分辨率
 
 两边配合的方式是先 ffmpeg 探明素材，再进 Resolve 做工程，最后用 ffmpeg 复核成品。
+
+## 实战坑位
+
+以下每一条都是实际驱动 Resolve 时踩出来的，会直接决定脚本写法和排查顺序。
+
+**一、沙箱没有文件系统。**
+`run_script` 里不能读文件，也不能 import 本地模块。需要读写文件或调子进程时改用 `run_script_unsafe`。共享代码没法 import，只能在调用之前把源码拼进脚本再执行。
+
+**二、追加片段和挂 Fusion comp 要分两次调用。**
+`AppendToTimeline` 当场返回的对象挂不上 Fusion comp，同一个脚本里接着做会全部返回 None。正确做法是先跑一遍只做追加，再跑一遍取回片段、挂 comp。
+
+**三、Fusion 找不到字体会让渲染直接崩。**
+报错形如 `Font Not Found: PingFang SC Bold`。Fusion 会默认去取 Bold，系统里未必有。设置 `Font` 之前先查字体表。
+
+```python
+fusion = resolve.Fusion()
+fonts = fusion.FontManager.GetFontList()   # FontManager 是属性，不是方法
+names = list(fonts.keys())                 # 取其中确实存在的字体名再用
+```
+
+写成 `fusion.FontManager()` 会拿到 None，然后报一个和字体无关的错误。
+
+**四、渲染会中途失败而不明确报错。**
+`StartRendering` 返回 True 只表示任务已提交。必须轮询 `GetRenderJobStatus` 看 `JobStatus`，并留意 `CompletionPercentage` 停在哪。渲染完成后再用 ffprobe 核对帧数，实际帧数明显少于时长乘帧率就是没渲染完。
+
+**五、`ExportCurrentFrameAsStill` 不可靠。**
+可能反复返回 None，Resolve 是否在前台、停在哪个页面都会影响它。要做抽帧检查时用 ffmpeg 更稳。
+
+**六、多个会话会抢同一个 Resolve。**
+同时有别的会话在驱动同一个 Resolve 时，脚本通道互相打断，症状是大面积返回 None 和各种异常。动手前确认只有一个会话在驱动。
+
+**七、每步都打印 JSON。**
+把工作拆成编号的步骤脚本，每步只做一件事，结束时输出结构化结果。Resolve 的脚本通道不稳定，一次做太多，失败时无从定位。排查用的 `probe`、`diag`、`try` 步骤会写得很多，这是正常的。
